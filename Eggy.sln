@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{3034155A-D
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5FF38187-3146-403E-B386-C48BA317DC59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tst", "tst", "{1A732C74-7BF8-4908-A69C-0834B42116FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5116576E-BC90-48CC-AECC-B68661638A3E} = {5FF38187-3146-403E-B386-C48BA317DC59}
+		{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4} = {5FF38187-3146-403E-B386-C48BA317DC59}
+		{A4897720-77CC-4CA5-AD16-836FFB3FECA0} = {5FF38187-3146-403E-B386-C48BA317DC59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE2ECC3C-1535-4B49-AA1D-D4F909DBFB0F}

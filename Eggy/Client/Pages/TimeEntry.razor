@@ -1,0 +1,23 @@
+﻿@page "/timeentry"
+@using Eggy.Client.Domain.Processing
+@implements IDisposable
+@inject IStorageProcessor _storageProcessor
+
+<h3>TimeEntry</h3>
+
+<ProjectsEditor/>
+
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        _storageProcessor.ProjectsChanged += StorageProcessorOnProjectsChanged;
+
+        await _storageProcessor.Init();
+    }
+
+    private void StorageProcessorOnProjectsChanged() => StateHasChanged();
+
+    public void Dispose() => _storageProcessor.ProjectsChanged -= StorageProcessorOnProjectsChanged;
+}

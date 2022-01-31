@@ -1,0 +1,50 @@
+﻿@inject IStorageProcessor _storageProcessor
+@using Eggy.Client.Domain.Processing
+@using Eggy.Client.Domain.Models
+@implements IDisposable
+
+<Iterations Items="_storageProcessor.AllProjects">
+    <p>
+        <div class="text-nowrap">@context.Id</div>
+        <div class="text-nowrap">@context.Name</div>
+    </p>
+</Iterations>
+
+<p>
+    <label>
+        Id
+        <input @bind="@NewId"/>
+    </label>
+    <label>
+        Name
+        <input @bind="@NewName"/>
+    </label>
+
+    <button @onclick="InsertNewProject">Update Year from Child</button>
+</p>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        _storageProcessor.ProjectsChanged += StorageProcessorOnProjectsChanged;
+    }
+
+    private void StorageProcessorOnProjectsChanged() => StateHasChanged();
+
+    public void Dispose() => _storageProcessor.ProjectsChanged -= StorageProcessorOnProjectsChanged;
+
+    public string NewId { get; set; }
+
+    public string NewName { get; set; }
+
+    private async Task InsertNewProject()
+    {
+        await _storageProcessor.SaveProject(new Project
+        {
+            Id = NewId,
+            Name = NewName
+        });
+    }
+
+}
