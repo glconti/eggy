@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eggy.Server", "Eggy\Server\Eggy.Server.csproj", "{5116576E-BC90-48CC-AECC-B68661638A3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Server", "Eggy\Server\Eggy.Server.csproj", "{5116576E-BC90-48CC-AECC-B68661638A3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eggy.Client", "Eggy\Client\Eggy.Client.csproj", "{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Client", "Eggy\Client\Eggy.Client.csproj", "{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eggy.Shared", "Eggy\Shared\Eggy.Shared.csproj", "{A4897720-77CC-4CA5-AD16-836FFB3FECA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Shared", "Eggy\Shared\Eggy.Shared.csproj", "{A4897720-77CC-4CA5-AD16-836FFB3FECA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{3034155A-D0C6-4E14-B791-A5BFCB557AF5}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
