@@ -1,18 +1,42 @@
 ﻿@implements IDisposable
 @inject IStorageProcessor _storageProcessor
 
-<p>
-    <label>
-        Id
-        <input @bind="@NewId"/>
-    </label>
-    <label>
-        Name
-        <input @bind="@NewName"/>
-    </label>
+<div class="box is-grouped">
+    <div class="field is-horizontal">
+        <div class="field-body">
 
-    <button @onclick="InsertNewProject">Add project</button>
-</p>
+            <div class="field is-narrow">
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select>
+                            <option>DRD</option>
+                            <option>SZT</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <p class="control">
+                    <input class="input" placeholder="Id" @bind="@NewId">
+                </p>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input" placeholder="name" @bind="@NewName">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" @onclick="InsertNewProject">Add project</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <Iterations Items="_storageProcessor.AllProjects">
     <ProjectView Project="@context"/>

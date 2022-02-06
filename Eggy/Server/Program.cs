@@ -17,6 +17,7 @@ else
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
 
 app.MapFallbackToFile("index.html");
 
