@@ -1,6 +1,6 @@
 ﻿namespace Eggy.Client.Domain.Models;
 
-internal class Project
+public class Project
 {
     public string Id { get; set; }
 

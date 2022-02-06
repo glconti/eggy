@@ -1,0 +1,15 @@
+﻿@inject IStorageProcessor _storageProcessor
+
+<p>
+    <span class="text-nowrap">@Project.Id</span>
+    <span class="text-nowrap">@Project.Name</span>
+    <button class="alert-danger" @onclick="DeleteProject">X</button>
+</p>
+
+@code {
+
+    [Parameter, EditorRequired]
+    public Project Project { get; set; } = null!;
+
+    public async Task DeleteProject() => await _storageProcessor.RemoveProject(Project);
+}

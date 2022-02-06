@@ -8,16 +8,19 @@ internal class StorageProcessor : IStorageProcessor
     private readonly IStorageBroker _storageBroker;
     private List<Project> _allProjects = new(0);
 
-    public StorageProcessor(IStorageBroker storageBroker)
-    {
-        _storageBroker = storageBroker;
-    }
+    public StorageProcessor(IStorageBroker storageBroker) => _storageBroker = storageBroker;
 
     public IReadOnlyList<Project> AllProjects => _allProjects;
+
+    public WeekTimeEntry WeekTimeEntries { get; private set; } = new();
+
+    public event Action? ProjectsChanged;
 
     public async ValueTask Init()
     {
         _allProjects = await _storageBroker.GetAllProjects();
+        ProjectsChanged?.Invoke();
+
         await Load();
     }
 
@@ -25,20 +28,24 @@ internal class StorageProcessor : IStorageProcessor
     {
         date ??= DateTime.Today;
 
-        _allProjects = await _storageBroker.GetAllProjects();
         WeekTimeEntries = await _storageBroker.GetDayEntry(DateOnly.FromDateTime(date.Value));
     }
 
-    public async ValueTask SaveProject(Project project)
+    public async ValueTask AddProject(Project project)
     {
         _allProjects.Add(project);
 
-        await _storageBroker.SaveProject(_allProjects);
+        await _storageBroker.SaveProjects(_allProjects);
 
         ProjectsChanged?.Invoke();
     }
 
-    public WeekTimeEntry WeekTimeEntries { get; private set; } = new();
+    public async ValueTask RemoveProject(Project project)
+    {
+        _allProjects.Remove(project);
 
-    public event Action? ProjectsChanged;
+        await _storageBroker.SaveProjects(_allProjects);
+
+        ProjectsChanged?.Invoke();
+    }
 }

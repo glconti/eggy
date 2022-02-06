@@ -18,9 +18,9 @@ internal class StorageBroker : IStorageBroker
             $"{dateOnly.Value.Year}-{GetWeekOfYear(dateOnly.Value)}")) ?? new WeekTimeEntry();
     }
 
-    public async ValueTask<List<Project>> GetAllProjects() => (await _localStorage.GetItemAsync<List<Project>>("Const_ProjectsList")) ?? new List<Project>();
+    public async ValueTask<List<Project>> GetAllProjects() => await _localStorage.GetItemAsync<List<Project>>("Const_ProjectsList") ?? new List<Project>();
 
-    public ValueTask SaveProject(List<Project> project) =>  _localStorage.SetItemAsync("Const_ProjectsList", project);
+    public ValueTask SaveProjects(List<Project> projects) =>  _localStorage.SetItemAsync("Const_ProjectsList", projects);
 
     private static int GetWeekOfYear(DateOnly dateOnly) =>
         CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(

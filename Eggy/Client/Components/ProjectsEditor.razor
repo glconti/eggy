@@ -1,14 +1,5 @@
-﻿@inject IStorageProcessor _storageProcessor
-@using Eggy.Client.Domain.Processing
-@using Eggy.Client.Domain.Models
-@implements IDisposable
-
-<Iterations Items="_storageProcessor.AllProjects">
-    <p>
-        <div class="text-nowrap">@context.Id</div>
-        <div class="text-nowrap">@context.Name</div>
-    </p>
-</Iterations>
+﻿@implements IDisposable
+@inject IStorageProcessor _storageProcessor
 
 <p>
     <label>
@@ -20,27 +11,30 @@
         <input @bind="@NewName"/>
     </label>
 
-    <button @onclick="InsertNewProject">Update Year from Child</button>
+    <button @onclick="InsertNewProject">Add project</button>
 </p>
+
+<Iterations Items="_storageProcessor.AllProjects">
+    <ProjectView Project="@context"/>
+</Iterations>
 
 @code {
 
-    protected override void OnInitialized()
-    {
-        _storageProcessor.ProjectsChanged += StorageProcessorOnProjectsChanged;
-    }
+    public string NewId { get; set; } = string.Empty;
 
-    private void StorageProcessorOnProjectsChanged() => StateHasChanged();
+    public string NewName { get; set; } = string.Empty;
 
-    public void Dispose() => _storageProcessor.ProjectsChanged -= StorageProcessorOnProjectsChanged;
+    protected override void OnInitialized() => _storageProcessor.ProjectsChanged += StateHasChanged;
 
-    public string NewId { get; set; }
-
-    public string NewName { get; set; }
+    public void Dispose() => _storageProcessor.ProjectsChanged -= StateHasChanged;
 
     private async Task InsertNewProject()
     {
-        await _storageProcessor.SaveProject(new Project
+        if (string.IsNullOrWhiteSpace(NewId)
+            || string.IsNullOrWhiteSpace(NewName)
+            || _storageProcessor.AllProjects.Any(project => project.Id == NewId || project.Name == NewName)) return;
+
+        await _storageProcessor.AddProject(new Project
         {
             Id = NewId,
             Name = NewName

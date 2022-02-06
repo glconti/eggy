@@ -12,7 +12,9 @@ internal interface IStorageProcessor
 
     ValueTask Load(DateTime? date = default);
 
-    ValueTask SaveProject(Project project);
+    ValueTask AddProject(Project project);
+
+    ValueTask RemoveProject(Project project);
 
     event Action ProjectsChanged;
 }

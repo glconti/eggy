@@ -8,5 +8,5 @@ internal interface IStorageBroker
 
     ValueTask<List<Project>> GetAllProjects();
 
-    ValueTask SaveProject(List<Project> project);
+    ValueTask SaveProjects(List<Project> projects);
 }
