@@ -1,8 +1,3 @@
 ﻿namespace Eggy.Client.Domain.Models;
 
-public class Project
-{
-    public string Id { get; set; }
-
-    public string Name { get; set; }
-}
+public record Project(string Id, string Name, string Type);

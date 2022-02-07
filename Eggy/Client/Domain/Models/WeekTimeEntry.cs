@@ -7,5 +7,5 @@ internal class WeekTimeEntry
     [Key]
     public long Id { get; set; } // year-dayofyear
 
-    public List<DayTimeEntry> TimeEntries { get; set; } = new();
+    public List<DayTimeEntry> TimeEntries { get; } = new();
 }

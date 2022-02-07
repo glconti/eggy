@@ -1,0 +1,17 @@
+﻿@inject IStorageProcessor _storageProcessor
+
+<p class="box level">
+    <div class="level-left">
+        <span class="level-item">@ProjectType</span>
+        <button class="button delete is-danger level-item" @onclick="DeleteProject"></button>
+    </div>
+</p>
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public string ProjectType { get; set; } = null!;
+
+    public async Task DeleteProject() => await _storageProcessor.RemoveProjectType(ProjectType);
+}

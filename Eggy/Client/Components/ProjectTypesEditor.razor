@@ -1,0 +1,47 @@
+﻿@implements IDisposable
+@inject IStorageProcessor _storageProcessor
+
+<div class="box is-grouped">
+
+    <h1 class="title has-text-primary-dark">Edit Project Types</h1>
+
+    <div class="field is-horizontal">
+        <div class="field-body">
+
+            <div class="field">
+                <p class="control">
+                    <input class="input" placeholder="Id" @bind="@NewType">
+                </p>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" @onclick="InsertNewProjectType">Add type</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<Iterations Items="_storageProcessor.AllProjectTypes">
+    <ProjectTypeView ProjectType="@context"/>
+</Iterations>
+
+@code {
+
+    public string NewType { get; set; } = string.Empty;
+
+    protected override void OnInitialized() => _storageProcessor.ProjectsChanged += StateHasChanged;
+
+    public void Dispose() => _storageProcessor.ProjectsChanged -= StateHasChanged;
+
+    private async Task InsertNewProjectType()
+    {
+        if (string.IsNullOrWhiteSpace(NewType)
+            || _storageProcessor.AllProjectTypes.Any(project => project == NewType)) return;
+
+        await _storageProcessor.AddProjectType(NewType);
+    }
+
+}

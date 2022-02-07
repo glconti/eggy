@@ -2,9 +2,9 @@
 
 internal class TimeEntry
 {
-    public Project Project { get; set; }
+    public Project Project { get; set; } = new(string.Empty, string.Empty, string.Empty);
 
     public double Hours { get; set; }
 
-    public string Comment { get; set; }
+    public string Comment { get; set; } = string.Empty;
 }

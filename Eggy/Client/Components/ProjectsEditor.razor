@@ -2,15 +2,19 @@
 @inject IStorageProcessor _storageProcessor
 
 <div class="box is-grouped">
+
+    <h1 class="title has-text-primary-dark">Edit Projects</h1>
+
     <div class="field is-horizontal">
         <div class="field-body">
 
             <div class="field is-narrow">
                 <div class="control">
                     <div class="select is-fullwidth">
-                        <select>
-                            <option>DRD</option>
-                            <option>SZT</option>
+                        <select @bind="@NewType">
+                            <Iterations Items="_storageProcessor.AllProjectTypes">
+                                <option>@context</option>
+                            </Iterations>
                         </select>
                     </div>
                 </div>
@@ -22,7 +26,7 @@
                 </p>
             </div>
 
-            <div class="field">
+            <div class="field is-expanded">
                 <div class="control">
                     <input class="input" placeholder="name" @bind="@NewName">
                 </div>
@@ -48,21 +52,28 @@
 
     public string NewName { get; set; } = string.Empty;
 
-    protected override void OnInitialized() => _storageProcessor.ProjectsChanged += StateHasChanged;
+    public string NewType { get; set; } = string.Empty;
 
-    public void Dispose() => _storageProcessor.ProjectsChanged -= StateHasChanged;
+    private void UpdateView()
+    {
+        if (string.IsNullOrWhiteSpace(NewType) && _storageProcessor.AllProjectTypes.Count > 0)
+            NewType = _storageProcessor.AllProjectTypes[0];
+
+        StateHasChanged();
+    }
+
+    protected override void OnInitialized() => _storageProcessor.ProjectsChanged += UpdateView;
+
+    public void Dispose() => _storageProcessor.ProjectsChanged -= UpdateView;
 
     private async Task InsertNewProject()
     {
         if (string.IsNullOrWhiteSpace(NewId)
             || string.IsNullOrWhiteSpace(NewName)
+            || string.IsNullOrWhiteSpace(NewType)
             || _storageProcessor.AllProjects.Any(project => project.Id == NewId || project.Name == NewName)) return;
 
-        await _storageProcessor.AddProject(new Project
-        {
-            Id = NewId,
-            Name = NewName
-        });
+        await _storageProcessor.AddProject(new Project(NewId, NewName, NewType));
     }
 
 }
