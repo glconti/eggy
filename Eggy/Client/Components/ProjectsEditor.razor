@@ -2,62 +2,80 @@
 @inject IStorageProcessor _storageProcessor
 
 <div class="box is-grouped">
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <button class="button" @onclick="ToggleExpand">
+                    <span class="icon has-text-info is-large">
+                        <ion-icon name="@ExpandButtonIconClass" aria-hidden="true"></ion-icon>
+                    </span>
+                </button>
+            </div>
+            <div class="level-item">
+                <h1 class="title has-text-primary-dark is-inline">Edit Projects</h1>
+            </div>
+        </div>
+    </div>
 
-    <h1 class="title has-text-primary-dark">Edit Projects</h1>
+    <div class="@IsExpandedClass">
+        <div class="field is-horizontal">
+            <div class="field-body">
 
-    <div class="field is-horizontal">
-        <div class="field-body">
-
-            <div class="field is-narrow">
-                <div class="control">
-                    <div class="select is-fullwidth">
-                        <select @bind="@NewTypeIndex">
-                            <Iterations Items="_storageProcessor.AllProjectTypes.Select((projectType, index) => new { ProjectType = projectType, Index = index})">
-                                <option value="@context.Index">@context.ProjectType.Type - @context.ProjectType.Category</option>
-                            </Iterations>
-                        </select>
+                <div class="field is-narrow">
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select @bind="@_newTypeIndex">
+                                <Iterations Items="_storageProcessor.AllProjectTypes.Select((projectType, index) => new {ProjectType = projectType, Index = index})">
+                                    <option value="@context.Index">@context.ProjectType.Type - @context.ProjectType.Category</option>
+                                </Iterations>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <p class="control">
-                    <input class="input" placeholder="Id" @bind="@NewId">
-                </p>
-            </div>
-
-            <div class="field is-expanded">
-                <div class="control">
-                    <input class="input" placeholder="name" @bind="@NewName">
+                <div class="field">
+                    <p class="control">
+                        <input class="input" placeholder="Id" @bind="@_newId">
+                    </p>
                 </div>
-            </div>
 
-            <div class="field">
-                <div class="control">
-                    <button class="button is-primary" @onclick="InsertNewProject">Add project</button>
+                <div class="field is-expanded">
+                    <div class="control">
+                        <input class="input" placeholder="name" @bind="@_newName">
+                    </div>
                 </div>
-            </div>
 
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" @onclick="InsertNewProject">Add project</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
+        <Iterations Items="_storageProcessor.AllProjects">
+            <ProjectView Project="@context"/>
+        </Iterations>
+
     </div>
 </div>
 
-<Iterations Items="_storageProcessor.AllProjects">
-    <ProjectView Project="@context"/>
-</Iterations>
 
 @code {
 
-    public string NewId { get; set; } = string.Empty;
+    private bool _isExpanded;
+    private string _newId  = string.Empty;
+    private string _newName = string.Empty;
+    private int _newTypeIndex  = -1;
 
-    public string NewName { get; set; } = string.Empty;
-
-    public int NewTypeIndex { get; set; } = -1;
+    private string IsExpandedClass => _isExpanded ? string.Empty : "is-hidden";
+    private string ExpandButtonIconClass => _isExpanded ? "chevron-up-outline" : "chevron-down-outline";
 
     private void UpdateView()
     {
-        if (NewTypeIndex < 0 && _storageProcessor.AllProjectTypes.Count > 0)
-            NewTypeIndex = 0;
+        if (_newTypeIndex < 0 && _storageProcessor.AllProjectTypes.Count > 0)
+            _newTypeIndex = 0;
 
         StateHasChanged();
     }
@@ -68,14 +86,15 @@
 
     private async Task InsertNewProject()
     {
-        if (string.IsNullOrWhiteSpace(NewId)
-            || string.IsNullOrWhiteSpace(NewName)
-            || NewTypeIndex < 0
-            || _storageProcessor.AllProjects.Any(project => project.Id == NewId || project.Name == NewName)) return;
+        if (string.IsNullOrWhiteSpace(_newId)
+            || string.IsNullOrWhiteSpace(_newName)
+            || _newTypeIndex < 0
+            || _storageProcessor.AllProjects.Any(project => project.Id == _newId || project.Name == _newName)) return;
 
-        var (type, category) = _storageProcessor.AllProjectTypes[NewTypeIndex];
+        var (type, category) = _storageProcessor.AllProjectTypes[_newTypeIndex];
 
-        await _storageProcessor.AddProject(new Project(NewId, NewName, type, category));
+        await _storageProcessor.AddProject(new Project(_newId, _newName, type, category));
     }
 
+    private void ToggleExpand() => _isExpanded = !_isExpanded;
 }

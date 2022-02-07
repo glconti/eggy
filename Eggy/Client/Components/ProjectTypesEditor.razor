@@ -2,43 +2,62 @@
 @inject IStorageProcessor _storageProcessor
 
 <div class="box is-grouped">
-
-    <h1 class="title has-text-primary-dark">Edit Project Types</h1>
-
-    <div class="field is-horizontal">
-        <div class="field-body">
-
-            <div class="field">
-                <p class="control">
-                    <input class="input" placeholder="Id" @bind="@NewType">
-                </p>
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <button class="button" @onclick="ToggleExpand">
+                    <span class="icon has-text-info is-large">
+                        <ion-icon name="@ExpandButtonIconClass" aria-hidden="true"></ion-icon>
+                    </span>
+                </button>
             </div>
-
-            <div class="field">
-                <p class="control">
-                    <input class="input" placeholder="Category" @bind="@NewCategory">
-                </p>
+            <div class="level-item">
+                <h1 class="title has-text-primary-dark is-inline">Edit Project Types</h1>
             </div>
-
-            <div class="field">
-                <div class="control">
-                    <button class="button is-primary" @onclick="InsertNewProjectType">Add type</button>
-                </div>
-            </div>
-
         </div>
+    </div>
+
+    <div class="@IsExpandedClass">
+
+        <div class="field is-horizontal">
+            <div class="field-body">
+
+                <div class="field">
+                    <p class="control">
+                        <input class="input" placeholder="Id" @bind="@_newType">
+                    </p>
+                </div>
+
+                <div class="field">
+                    <p class="control">
+                        <input class="input" placeholder="Category" @bind="@_newCategory">
+                    </p>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" @onclick="InsertNewProjectType">Add type</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <Iterations Items="_storageProcessor.AllProjectTypes">
+            <ProjectTypeView ProjectType="@context"/>
+        </Iterations>
+
     </div>
 </div>
 
-<Iterations Items="_storageProcessor.AllProjectTypes">
-    <ProjectTypeView ProjectType="@context"/>
-</Iterations>
-
 @code {
 
-    public string NewType { get; set; } = string.Empty;
+    private bool _isExpanded;
+    private string _newType = string.Empty;
+    private string _newCategory = string.Empty;
 
-    public string NewCategory { get; set; } = string.Empty;
+    private string IsExpandedClass => _isExpanded ? string.Empty : "is-hidden";
+    private string ExpandButtonIconClass => _isExpanded ? "chevron-up-outline" : "chevron-down-outline";
 
     protected override void OnInitialized() => _storageProcessor.ProjectsChanged += StateHasChanged;
 
@@ -46,13 +65,15 @@
 
     private async Task InsertNewProjectType()
     {
-        if (string.IsNullOrWhiteSpace(NewType) || string.IsNullOrWhiteSpace(NewType)) return;
+        if (string.IsNullOrWhiteSpace(_newType) || string.IsNullOrWhiteSpace(_newType)) return;
 
-        var newProjectType = new ProjectType(NewType, NewCategory);
+        var newProjectType = new ProjectType(_newType, _newCategory);
 
         if (_storageProcessor.AllProjectTypes.Contains(newProjectType)) return;
 
         await _storageProcessor.AddProjectType(newProjectType);
     }
+
+    private void ToggleExpand() => _isExpanded = !_isExpanded;
 
 }
