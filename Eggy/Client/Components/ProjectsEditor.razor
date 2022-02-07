@@ -11,9 +11,9 @@
             <div class="field is-narrow">
                 <div class="control">
                     <div class="select is-fullwidth">
-                        <select @bind="@NewType">
-                            <Iterations Items="_storageProcessor.AllProjectTypes">
-                                <option>@context</option>
+                        <select @bind="@NewTypeIndex">
+                            <Iterations Items="_storageProcessor.AllProjectTypes.Select((projectType, index) => new { ProjectType = projectType, Index = index})">
+                                <option value="@context.Index">@context.ProjectType.Type - @context.ProjectType.Category</option>
                             </Iterations>
                         </select>
                     </div>
@@ -52,12 +52,12 @@
 
     public string NewName { get; set; } = string.Empty;
 
-    public string NewType { get; set; } = string.Empty;
+    public int NewTypeIndex { get; set; } = -1;
 
     private void UpdateView()
     {
-        if (string.IsNullOrWhiteSpace(NewType) && _storageProcessor.AllProjectTypes.Count > 0)
-            NewType = _storageProcessor.AllProjectTypes[0];
+        if (NewTypeIndex < 0 && _storageProcessor.AllProjectTypes.Count > 0)
+            NewTypeIndex = 0;
 
         StateHasChanged();
     }
@@ -70,10 +70,12 @@
     {
         if (string.IsNullOrWhiteSpace(NewId)
             || string.IsNullOrWhiteSpace(NewName)
-            || string.IsNullOrWhiteSpace(NewType)
+            || NewTypeIndex < 0
             || _storageProcessor.AllProjects.Any(project => project.Id == NewId || project.Name == NewName)) return;
 
-        await _storageProcessor.AddProject(new Project(NewId, NewName, NewType));
+        var (type, category) = _storageProcessor.AllProjectTypes[NewTypeIndex];
+
+        await _storageProcessor.AddProject(new Project(NewId, NewName, type, category));
     }
 
 }

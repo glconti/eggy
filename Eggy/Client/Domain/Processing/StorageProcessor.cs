@@ -1,5 +1,6 @@
 ﻿using Eggy.Client.Domain.Brokers;
 using Eggy.Client.Domain.Models;
+using Eggy.Client.Domain.System;
 
 namespace Eggy.Client.Domain.Processing;
 
@@ -7,13 +8,13 @@ internal class StorageProcessor : IStorageProcessor
 {
     private readonly IStorageBroker _storageBroker;
     private List<Project> _allProjects = new(0);
-    private List<string> _allProjectTypes = new(0);
+    private List<ProjectType> _allProjectTypes = new(0);
 
     public StorageProcessor(IStorageBroker storageBroker) => _storageBroker = storageBroker;
 
     public IReadOnlyList<Project> AllProjects => _allProjects;
 
-    public IReadOnlyList<string> AllProjectTypes => _allProjectTypes;
+    public IReadOnlyList<ProjectType> AllProjectTypes => _allProjectTypes;
 
     public WeekTimeEntry WeekTimeEntries { get; private set; } = new();
 
@@ -21,8 +22,8 @@ internal class StorageProcessor : IStorageProcessor
 
     public async ValueTask Init()
     {
-        _allProjects = await _storageBroker.GetAllProjects();
-        _allProjectTypes = await _storageBroker.GetAllProjectTypes();
+        _allProjects = await _storageBroker.GetAllProjects().NoContext();
+        _allProjectTypes = await _storageBroker.GetAllProjectTypes().NoContext();
         ProjectsChanged?.Invoke();
 
         await Load();
@@ -32,14 +33,14 @@ internal class StorageProcessor : IStorageProcessor
     {
         date ??= DateTime.Today;
 
-        WeekTimeEntries = await _storageBroker.GetDayEntry(DateOnly.FromDateTime(date.Value));
+        WeekTimeEntries = await _storageBroker.GetDayEntry(DateOnly.FromDateTime(date.Value)).NoContext();
     }
 
     public async ValueTask AddProject(Project project)
     {
         _allProjects.Add(project);
 
-        await _storageBroker.SaveProjects(_allProjects);
+        await _storageBroker.SaveProjects(_allProjects).NoContext();
 
         ProjectsChanged?.Invoke();
     }
@@ -48,25 +49,25 @@ internal class StorageProcessor : IStorageProcessor
     {
         _allProjects.Remove(project);
 
-        await _storageBroker.SaveProjects(_allProjects);
+        await _storageBroker.SaveProjects(_allProjects).NoContext();
 
         ProjectsChanged?.Invoke();
     }
 
-    public async ValueTask AddProjectType(string projectType)
+    public async ValueTask AddProjectType(ProjectType projectType)
     {
         _allProjectTypes.Add(projectType);
 
-        await _storageBroker.SaveProjectTypes(_allProjectTypes);
+        await _storageBroker.SaveProjectTypes(_allProjectTypes).NoContext();
 
         ProjectsChanged?.Invoke();
     }
 
-    public async ValueTask RemoveProjectType(string projectType)
+    public async ValueTask RemoveProjectType(ProjectType projectType)
     {
         _allProjectTypes.Remove(projectType);
 
-        await _storageBroker.SaveProjectTypes(_allProjectTypes);
+        await _storageBroker.SaveProjectTypes(_allProjectTypes).NoContext();
 
         ProjectsChanged?.Invoke();
     }

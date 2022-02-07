@@ -2,7 +2,8 @@
 
 <p class="box level">
     <div class="level-left">
-        <span class="level-item">@ProjectType</span>
+        <span class="level-item">@ProjectType.Type</span>
+        <span class="level-item">@ProjectType.Category</span>
         <button class="button delete is-danger level-item" @onclick="DeleteProject"></button>
     </div>
 </p>
@@ -11,7 +12,7 @@
 
     [Parameter]
     [EditorRequired]
-    public string ProjectType { get; set; } = null!;
+    public ProjectType ProjectType { get; set; } = null!;
 
     public async Task DeleteProject() => await _storageProcessor.RemoveProjectType(ProjectType);
 }

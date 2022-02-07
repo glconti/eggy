@@ -1,0 +1,20 @@
+﻿@page "/settings"
+@implements IDisposable
+@inject IStorageProcessor _storageProcessor
+
+<ProjectTypesEditor/>
+<ProjectsEditor/>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        _storageProcessor.ProjectsChanged += StorageProcessorOnProjectsChanged;
+
+        await _storageProcessor.Init();
+    }
+
+    private void StorageProcessorOnProjectsChanged() => StateHasChanged();
+
+    public void Dispose() => _storageProcessor.ProjectsChanged -= StorageProcessorOnProjectsChanged;
+}

@@ -15,6 +15,12 @@
             </div>
 
             <div class="field">
+                <p class="control">
+                    <input class="input" placeholder="Category" @bind="@NewCategory">
+                </p>
+            </div>
+
+            <div class="field">
                 <div class="control">
                     <button class="button is-primary" @onclick="InsertNewProjectType">Add type</button>
                 </div>
@@ -32,16 +38,21 @@
 
     public string NewType { get; set; } = string.Empty;
 
+    public string NewCategory { get; set; } = string.Empty;
+
     protected override void OnInitialized() => _storageProcessor.ProjectsChanged += StateHasChanged;
 
     public void Dispose() => _storageProcessor.ProjectsChanged -= StateHasChanged;
 
     private async Task InsertNewProjectType()
     {
-        if (string.IsNullOrWhiteSpace(NewType)
-            || _storageProcessor.AllProjectTypes.Any(project => project == NewType)) return;
+        if (string.IsNullOrWhiteSpace(NewType) || string.IsNullOrWhiteSpace(NewType)) return;
 
-        await _storageProcessor.AddProjectType(NewType);
+        var newProjectType = new ProjectType(NewType, NewCategory);
+
+        if (_storageProcessor.AllProjectTypes.Contains(newProjectType)) return;
+
+        await _storageProcessor.AddProjectType(newProjectType);
     }
 
 }

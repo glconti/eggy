@@ -24,4 +24,7 @@
   <ItemGroup>
     <UpToDateCheckInput Remove="Components\ProjectTypesEditor.razor" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Domain\System\" />
+  </ItemGroup>
 </Project>

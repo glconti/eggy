@@ -6,7 +6,7 @@ internal interface IStorageProcessor
 {
     IReadOnlyList<Project> AllProjects { get; }
 
-    IReadOnlyList<string> AllProjectTypes { get; }
+    IReadOnlyList<ProjectType> AllProjectTypes { get; }
 
     WeekTimeEntry WeekTimeEntries { get; }
 
@@ -18,9 +18,9 @@ internal interface IStorageProcessor
 
     ValueTask RemoveProject(Project project);
 
-    ValueTask AddProjectType(string newType);
+    ValueTask AddProjectType(ProjectType newType);
 
-    ValueTask RemoveProjectType(string newType);
+    ValueTask RemoveProjectType(ProjectType newType);
 
     event Action ProjectsChanged;
 }
