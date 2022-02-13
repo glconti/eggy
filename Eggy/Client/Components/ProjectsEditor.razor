@@ -1,5 +1,5 @@
 ﻿@implements IDisposable
-@inject IStorageProcessor _storageProcessor
+@inject IProjectProcessor _projectProcessor
 
 <div class="box is-grouped">
     <div class="level">
@@ -25,7 +25,7 @@
                     <div class="control">
                         <div class="select is-fullwidth">
                             <select @bind="@_newTypeIndex">
-                                <Iterations Items="_storageProcessor.AllProjectTypes.Select((projectType, index) => new {ProjectType = projectType, Index = index})">
+                                <Iterations Items="_projectProcessor.AllProjectTypes.Select((projectType, index) => new {ProjectType = projectType, Index = index})">
                                     <option value="@context.Index">@context.ProjectType.Type - @context.ProjectType.Category</option>
                                 </Iterations>
                             </select>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <Iterations Items="_storageProcessor.AllProjects">
+        <Iterations Items="_projectProcessor.AllProjects">
             <ProjectView Project="@context"/>
         </Iterations>
 
@@ -74,26 +74,26 @@
 
     private void UpdateView()
     {
-        if (_newTypeIndex < 0 && _storageProcessor.AllProjectTypes.Count > 0)
+        if (_newTypeIndex < 0 && _projectProcessor.AllProjectTypes.Count > 0)
             _newTypeIndex = 0;
 
         StateHasChanged();
     }
 
-    protected override void OnInitialized() => _storageProcessor.ProjectsChanged += UpdateView;
+    protected override void OnInitialized() => _projectProcessor.ProjectsChanged += UpdateView;
 
-    public void Dispose() => _storageProcessor.ProjectsChanged -= UpdateView;
+    public void Dispose() => _projectProcessor.ProjectsChanged -= UpdateView;
 
     private async Task InsertNewProject()
     {
         if (string.IsNullOrWhiteSpace(_newId)
             || string.IsNullOrWhiteSpace(_newName)
             || _newTypeIndex < 0
-            || _storageProcessor.AllProjects.Any(project => project.Id == _newId || project.Name == _newName)) return;
+            || _projectProcessor.AllProjects.Any(project => project.Id == _newId || project.Name == _newName)) return;
 
-        var (type, category) = _storageProcessor.AllProjectTypes[_newTypeIndex];
+        var (type, category) = _projectProcessor.AllProjectTypes[_newTypeIndex];
 
-        await _storageProcessor.AddProject(new Project(_newId, _newName, type, category));
+        await _projectProcessor.AddProject(new Project(_newId, _newName, type, category));
     }
 
     private void ToggleExpand() => _isExpanded = !_isExpanded;

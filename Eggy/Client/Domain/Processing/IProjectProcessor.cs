@@ -2,7 +2,7 @@
 
 namespace Eggy.Client.Domain.Processing;
 
-internal interface IStorageProcessor
+internal interface IProjectProcessor
 {
     IReadOnlyList<Project> AllProjects { get; }
 

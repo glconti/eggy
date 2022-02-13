@@ -1,4 +1,4 @@
-﻿@inject IStorageProcessor _storageProcessor
+﻿@inject IProjectProcessor _projectProcessor
 
 <p class="box level">
     <div class="level-left">
@@ -16,5 +16,5 @@
     [EditorRequired]
     public Project Project { get; set; } = null!;
 
-    public async Task DeleteProject() => await _storageProcessor.RemoveProject(Project);
+    public async Task DeleteProject() => await _projectProcessor.RemoveProject(Project);
 }

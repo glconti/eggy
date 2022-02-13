@@ -4,13 +4,13 @@ using Eggy.Client.Domain.System;
 
 namespace Eggy.Client.Domain.Processing;
 
-internal class StorageProcessor : IStorageProcessor
+internal class ProjectProcessor : IProjectProcessor
 {
     private readonly IStorageBroker _storageBroker;
     private List<Project> _allProjects = new(0);
     private List<ProjectType> _allProjectTypes = new(0);
 
-    public StorageProcessor(IStorageBroker storageBroker) => _storageBroker = storageBroker;
+    public ProjectProcessor(IStorageBroker storageBroker) => _storageBroker = storageBroker;
 
     public IReadOnlyList<Project> AllProjects => _allProjects;
 

@@ -1,6 +1,5 @@
 ﻿@page "/settings"
-@implements IDisposable
-@inject IStorageProcessor _storageProcessor
+@inject IProjectProcessor _projectProcessor
 
 <ProjectTypesEditor/>
 <ProjectsEditor/>
@@ -9,12 +8,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _storageProcessor.ProjectsChanged += StorageProcessorOnProjectsChanged;
-
-        await _storageProcessor.Init();
+        await _projectProcessor.Init();
     }
 
-    private void StorageProcessorOnProjectsChanged() => StateHasChanged();
-
-    public void Dispose() => _storageProcessor.ProjectsChanged -= StorageProcessorOnProjectsChanged;
 }

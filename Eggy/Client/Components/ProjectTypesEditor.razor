@@ -1,5 +1,5 @@
 ﻿@implements IDisposable
-@inject IStorageProcessor _storageProcessor
+@inject IProjectProcessor _projectProcessor
 
 <div class="box is-grouped">
     <div class="level">
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <Iterations Items="_storageProcessor.AllProjectTypes">
+        <Iterations Items="_projectProcessor.AllProjectTypes">
             <ProjectTypeView ProjectType="@context"/>
         </Iterations>
 
@@ -59,9 +59,9 @@
     private string IsExpandedClass => _isExpanded ? string.Empty : "is-hidden";
     private string ExpandButtonIconClass => _isExpanded ? "chevron-up-outline" : "chevron-down-outline";
 
-    protected override void OnInitialized() => _storageProcessor.ProjectsChanged += StateHasChanged;
+    protected override void OnInitialized() => _projectProcessor.ProjectsChanged += StateHasChanged;
 
-    public void Dispose() => _storageProcessor.ProjectsChanged -= StateHasChanged;
+    public void Dispose() => _projectProcessor.ProjectsChanged -= StateHasChanged;
 
     private async Task InsertNewProjectType()
     {
@@ -69,9 +69,9 @@
 
         var newProjectType = new ProjectType(_newType, _newCategory);
 
-        if (_storageProcessor.AllProjectTypes.Contains(newProjectType)) return;
+        if (_projectProcessor.AllProjectTypes.Contains(newProjectType)) return;
 
-        await _storageProcessor.AddProjectType(newProjectType);
+        await _projectProcessor.AddProjectType(newProjectType);
     }
 
     private void ToggleExpand() => _isExpanded = !_isExpanded;

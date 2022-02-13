@@ -1,12 +1,11 @@
-﻿@page "/"
-
-<WeekTimeEntry/>
+﻿@implements IDisposable
+@inject IProjectProcessor _projectProcessor
 
 <table class="table">
     <thead>
     <tr>
         <th>
-            <abbr title="Position">Pos</abbr>
+            <abbr title="Position">Project</abbr>
         </th>
         <th>Team</th>
         <th>
@@ -87,3 +86,16 @@
     </tr>
     </tbody>
 </table>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await _projectProcessor.Init();
+        await _projectProcessor.Load();
+    }
+
+    private void StorageProcessorOnProjectsChanged() => StateHasChanged();
+
+    public void Dispose() => _projectProcessor.ProjectsChanged -= StorageProcessorOnProjectsChanged;
+}
