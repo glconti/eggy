@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Server", "Eggy\Server\Eggy.Server.csproj", "{5116576E-BC90-48CC-AECC-B68661638A3E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Client", "Eggy\Client\Eggy.Client.csproj", "{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{3034155A-D0C6-4E14-B791-A5BFCB557AF5}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
@@ -16,27 +12,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5FF38187-314
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tst", "tst", "{1A732C74-7BF8-4908-A69C-0834B42116FB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Client", "src\Eggy.Client\Eggy.Client.csproj", "{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Server", "src\Eggy.Server\Eggy.Server.csproj", "{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5116576E-BC90-48CC-AECC-B68661638A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5116576E-BC90-48CC-AECC-B68661638A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5116576E-BC90-48CC-AECC-B68661638A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5116576E-BC90-48CC-AECC-B68661638A3E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5116576E-BC90-48CC-AECC-B68661638A3E} = {5FF38187-3146-403E-B386-C48BA317DC59}
-		{A5DF4880-9EE2-4910-9B0C-AC2FB9FB1AF4} = {5FF38187-3146-403E-B386-C48BA317DC59}
+		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D} = {5FF38187-3146-403E-B386-C48BA317DC59}
+		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB} = {5FF38187-3146-403E-B386-C48BA317DC59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE2ECC3C-1535-4B49-AA1D-D4F909DBFB0F}

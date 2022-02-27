@@ -3,6 +3,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Client\Eggy.Client.csproj" />
+    <ProjectReference Include="..\Eggy.Client\Eggy.Client.csproj" />
   </ItemGroup>
 </Project>
