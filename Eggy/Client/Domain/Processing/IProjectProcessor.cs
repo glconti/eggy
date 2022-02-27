@@ -8,11 +8,7 @@ internal interface IProjectProcessor
 
     IReadOnlyList<ProjectType> AllProjectTypes { get; }
 
-    WeekTimeEntry WeekTimeEntries { get; }
-
     ValueTask Init();
-
-    ValueTask Load(DateTime? date = default);
 
     ValueTask AddProject(Project project);
 

@@ -1,8 +1,9 @@
 ﻿@page "/"
+@inject IWeekTimeProcessor _weekTimeProcessor
 
-<WeekTimeEntry/>
+<WeekTimeEntryView/>
 
-<table class="table">
+@*<table class="table">
     <thead>
     <tr>
         <th>
@@ -86,4 +87,10 @@
         <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
     </tr>
     </tbody>
-</table>
+</table>*@
+
+@code {
+
+    protected override async Task OnInitializedAsync() => await _weekTimeProcessor.Load();
+
+}

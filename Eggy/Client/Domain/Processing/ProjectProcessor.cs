@@ -16,24 +16,14 @@ internal class ProjectProcessor : IProjectProcessor
 
     public IReadOnlyList<ProjectType> AllProjectTypes => _allProjectTypes;
 
-    public WeekTimeEntry WeekTimeEntries { get; private set; } = new();
-
     public event Action? ProjectsChanged;
 
     public async ValueTask Init()
     {
         _allProjects = await _storageBroker.GetAllProjects().NoContext();
         _allProjectTypes = await _storageBroker.GetAllProjectTypes().NoContext();
+
         ProjectsChanged?.Invoke();
-
-        await Load();
-    }
-
-    public async ValueTask Load(DateTime? date = default)
-    {
-        date ??= DateTime.Today;
-
-        WeekTimeEntries = await _storageBroker.GetDayEntry(DateOnly.FromDateTime(date.Value)).NoContext();
     }
 
     public async ValueTask AddProject(Project project)

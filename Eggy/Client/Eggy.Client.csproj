@@ -17,15 +17,11 @@
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\ProjectTypesEditor.razor" />
     <_ContentIncludedByDefault Remove="Components\ProjectView.razor" />
-    <_ContentIncludedByDefault Remove="Components\WeekTimeEntry.razor" />
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Remove="Components\ProjectTypesEditor.razor" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\System\" />
-  </ItemGroup>
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\WeekTimeEntry.razor" />
   </ItemGroup>
 </Project>

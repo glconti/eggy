@@ -5,4 +5,6 @@ internal class DayTimeEntry
     public DateOnly Date { get; set; }
 
     public List<TimeEntry> TimeEntries { get; set; } = new();
+
+    public double TotalHours => TimeEntries.Sum(t => t.Hours);
 }

@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Eggy.Client.Domain.Models;
 using Eggy.Client.Domain.System;
 
@@ -21,10 +20,9 @@ internal class StorageBroker : IStorageBroker
 
     public async ValueTask<WeekTimeEntry> GetDayEntry(DateOnly? dateOnly = default)
     {
-        dateOnly ??= DateOnly.FromDateTime(DateTime.Today);
+        dateOnly ??= DateOnly.FromDateTime(DateTime.UtcNow.Date);
 
-        return await _localStorage.GetItemAsync<WeekTimeEntry>(
-            $"{dateOnly.Value.Year}-{GetWeekOfYear(dateOnly.Value)}").NoContext() ?? new WeekTimeEntry();
+        return await _localStorage.GetItemAsync<WeekTimeEntry>(WeekTimeEntry.GetKey(dateOnly.Value)).NoContext() ?? new WeekTimeEntry();
     }
 
     public async ValueTask<List<Project>> GetAllProjects()
@@ -63,9 +61,4 @@ internal class StorageBroker : IStorageBroker
     public ValueTask SaveProjects(List<Project> projects) =>  _localStorage.SetItemAsync("Const_ProjectsList", projects);
 
     public ValueTask SaveProjectTypes(List<ProjectType> allProjectTypes) => _localStorage.SetItemAsync(ProjectTypesListStorage, allProjectTypes);
-
-    private static int GetWeekOfYear(DateOnly dateOnly) =>
-        CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(
-            dateOnly.ToDateTime(new TimeOnly(0, 0)),
-            CalendarWeekRule.FirstDay, DayOfWeek.Monday);
 }
