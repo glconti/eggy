@@ -4,6 +4,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Client\Eggy.Client.csproj" />
-    <ProjectReference Include="..\Shared\Eggy.Shared.csproj" />
   </ItemGroup>
 </Project>
