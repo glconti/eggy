@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Client", "src\Eggy.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Server", "src\Eggy.Server\Eggy.Server.csproj", "{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eggy.Client.Tests", "tst\Eggy.Client.Tests\Eggy.Client.Tests.csproj", "{CF8FFA5F-464E-49DC-B1E2-F69B9B1C5175}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF8FFA5F-464E-49DC-B1E2-F69B9B1C5175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF8FFA5F-464E-49DC-B1E2-F69B9B1C5175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF8FFA5F-464E-49DC-B1E2-F69B9B1C5175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF8FFA5F-464E-49DC-B1E2-F69B9B1C5175}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D} = {5FF38187-3146-403E-B386-C48BA317DC59}
 		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB} = {5FF38187-3146-403E-B386-C48BA317DC59}
+		{CF8FFA5F-464E-49DC-B1E2-F69B9B1C5175} = {1A732C74-7BF8-4908-A69C-0834B42116FB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE2ECC3C-1535-4B49-AA1D-D4F909DBFB0F}
