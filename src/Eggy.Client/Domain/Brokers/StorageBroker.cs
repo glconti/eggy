@@ -22,7 +22,7 @@ internal class StorageBroker : IStorageBroker
     {
         dateOnly ??= DateOnly.FromDateTime(DateTime.UtcNow.Date);
 
-        return await _localStorage.GetItemAsync<WeekTimeEntry>(WeekTimeEntry.GetKey(dateOnly.Value)).NoContext() ?? new WeekTimeEntry();
+        return await _localStorage.GetItemAsync<WeekTimeEntry>(WeekTimeEntry.GetKey(dateOnly.Value)).NoContext() ?? WeekTimeEntry.Generate(dateOnly);
     }
 
     public async ValueTask<List<Project>> GetAllProjects()

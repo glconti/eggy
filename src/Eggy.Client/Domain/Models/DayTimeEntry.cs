@@ -1,6 +1,6 @@
 ﻿namespace Eggy.Client.Domain.Models;
 
-internal class DayTimeEntry
+public class DayTimeEntry
 {
     public DateOnly Date { get; set; }
 

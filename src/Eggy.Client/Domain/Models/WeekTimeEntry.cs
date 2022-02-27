@@ -3,18 +3,23 @@ using System.Globalization;
 
 namespace Eggy.Client.Domain.Models;
 
-internal class WeekTimeEntry
+public class WeekTimeEntry
 {
     [Key]
     public string Id { get; set; } // year-weekofyear
 
-    public WeekTimeEntry()
-    {
-        Id = GetKey(DateOnly.FromDateTime(DateTime.UtcNow));
-        TimeEntries = GenerateWeek(DateTime.UtcNow);
-    }
+    public List<DayTimeEntry> TimeEntries { get; set; } = new();
 
-    public List<DayTimeEntry> TimeEntries { get; } = new();
+    public static WeekTimeEntry Generate(DateOnly? date = default)
+    {
+        date ??= DateOnly.FromDateTime(DateTime.UtcNow);
+
+        return new()
+        {
+            Id = GetKey(date.Value),
+            TimeEntries = GenerateWeek(date.Value)
+        };
+    }
 
     public static string GetKey(DateOnly dateOnly) => $"{dateOnly.Year}-{GetWeekOfYear(dateOnly)}";
 
@@ -23,18 +28,21 @@ internal class WeekTimeEntry
             dateOnly.ToDateTime(new TimeOnly(0, 0), DateTimeKind.Utc),
             CalendarWeekRule.FirstDay, DayOfWeek.Monday);
 
-    private static List<DayTimeEntry> GenerateWeek(DateTime dateTime)
+    private static List<DayTimeEntry> GenerateWeek(DateOnly dateTime)
     {
+        var prevMondayShift = -((dateTime.DayOfWeek - DayOfWeek.Monday + 7) % 7);
+        var startDate = dateTime.AddDays(prevMondayShift);
+
         var result = new List<DayTimeEntry>(7);
 
-        for (var i = 1; i < 8; i++)
+        for (var i = 0; i < 7; i++)
         {
-            var weekDay = dateTime.AddDays((DayOfWeek)i - dateTime.DayOfWeek);
-
             result.Add(new DayTimeEntry
             {
-                Date = DateOnly.FromDateTime(weekDay)
+                Date = startDate
             });
+
+            startDate = startDate.AddDays(1);
         }
 
         return result;

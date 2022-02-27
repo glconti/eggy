@@ -11,17 +11,4 @@
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\ProjectView.razor" />
-  </ItemGroup>
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\ProjectTypesEditor.razor" />
-    <_ContentIncludedByDefault Remove="Components\ProjectView.razor" />
-  </ItemGroup>
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\ProjectTypesEditor.razor" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\System\" />
-  </ItemGroup>
 </Project>

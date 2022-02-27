@@ -1,6 +1,6 @@
 ﻿namespace Eggy.Client.Domain.Models;
 
-internal class TimeEntry
+public class TimeEntry
 {
     public Project Project { get; set; } = new(string.Empty, string.Empty, string.Empty, string.Empty);
 
