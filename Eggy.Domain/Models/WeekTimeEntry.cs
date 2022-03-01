@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-namespace Eggy.Client.Domain.Models;
+namespace Eggy.Domain.Models;
 
 public class WeekTimeEntry
 {

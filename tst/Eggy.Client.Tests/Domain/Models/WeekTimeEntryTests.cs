@@ -1,4 +1,4 @@
-﻿using Eggy.Client.Domain.Models;
+﻿using Eggy.Domain.Models;
 using FluentAssertions;
 using Xunit;
 

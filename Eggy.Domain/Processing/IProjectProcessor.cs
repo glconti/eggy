@@ -1,8 +1,8 @@
-﻿using Eggy.Client.Domain.Models;
+﻿using Eggy.Domain.Models;
 
-namespace Eggy.Client.Domain.Processing;
+namespace Eggy.Domain.Processing;
 
-internal interface IProjectProcessor
+public interface IProjectProcessor
 {
     IReadOnlyList<Project> AllProjects { get; }
 

@@ -1,4 +1,4 @@
-﻿namespace Eggy.Client.Domain.Models;
+﻿namespace Eggy.Domain.Models;
 
 public class TimeEntry
 {

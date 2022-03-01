@@ -1,3 +1,3 @@
-﻿namespace Eggy.Client.Domain.Models;
+﻿namespace Eggy.Domain.Models;
 
 public record ProjectType(string Type, string Category);

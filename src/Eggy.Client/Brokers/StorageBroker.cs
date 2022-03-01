@@ -1,8 +1,9 @@
 ﻿using Blazored.LocalStorage;
-using Eggy.Client.Domain.Models;
-using Eggy.Client.Domain.System;
+using Eggy.Domain.Brokers;
+using Eggy.Domain.Models;
+using Eggy.Domain.System;
 
-namespace Eggy.Client.Domain.Brokers;
+namespace Eggy.Client.Brokers;
 
 internal class StorageBroker : IStorageBroker
 {

@@ -1,10 +1,10 @@
-﻿using Eggy.Client.Domain.Brokers;
-using Eggy.Client.Domain.Models;
-using Eggy.Client.Domain.System;
+﻿using Eggy.Domain.Brokers;
+using Eggy.Domain.Models;
+using Eggy.Domain.System;
 
-namespace Eggy.Client.Domain.Processing;
+namespace Eggy.Domain.Processing;
 
-internal class ProjectProcessor : IProjectProcessor
+public class ProjectProcessor : IProjectProcessor
 {
     private readonly IStorageBroker _storageBroker;
     private List<Project> _allProjects = new(0);

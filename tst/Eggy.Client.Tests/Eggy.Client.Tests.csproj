@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Eggy.Client\Eggy.Client.csproj" />
+    <ProjectReference Include="..\..\Eggy.Domain\Eggy.Domain.csproj" />
   </ItemGroup>
 </Project>

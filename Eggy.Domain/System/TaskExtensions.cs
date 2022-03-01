@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Eggy.Client.Domain.System;
+namespace Eggy.Domain.System;
 
 public static class TaskExtensions
 {

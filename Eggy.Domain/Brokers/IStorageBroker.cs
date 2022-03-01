@@ -1,8 +1,8 @@
-﻿using Eggy.Client.Domain.Models;
+﻿using Eggy.Domain.Models;
 
-namespace Eggy.Client.Domain.Brokers;
+namespace Eggy.Domain.Brokers;
 
-internal interface IStorageBroker
+public interface IStorageBroker
 {
     ValueTask<WeekTimeEntry> GetDayEntry(DateOnly? dateOnly = default);
 

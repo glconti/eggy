@@ -1,7 +1,8 @@
 using Blazored.LocalStorage;
 using Eggy.Client;
-using Eggy.Client.Domain.Brokers;
-using Eggy.Client.Domain.Processing;
+using Eggy.Client.Brokers;
+using Eggy.Domain.Brokers;
+using Eggy.Domain.Processing;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
