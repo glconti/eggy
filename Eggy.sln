@@ -20,12 +20,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Client.Tests", "tst\Eg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eggy.Domain", "Eggy.Domain\Eggy.Domain.csproj", "{3B5781ED-6DA6-4264-B825-C01129F7F8AA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{9CB50A3F-D5D8-45CD-B692-35C920A4CD70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CB50A3F-D5D8-45CD-B692-35C920A4CD70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CB50A3F-D5D8-45CD-B692-35C920A4CD70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F35B681-A465-4756-BBEE-2EAFCE9A7C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
