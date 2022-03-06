@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Eggy.Client.Tests.Domain.Models;
+namespace Eggy.Domain.Tests.Models;
 
 public class WeekTimeEntryTests : TestsBase
 {
