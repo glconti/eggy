@@ -4,42 +4,59 @@
     <thead>
     <tr>
         <th>
-            <abbr title="Project">Total hours</abbr>
+            Week @WeekTimeProcessor.WeekTime.Id
         </th>
 
-        <Iterations Items="WeekTimeProcessor.WeekTimeEntries.TimeEntries">
+        <Iterations Items="WeekTimeProcessor.WeekTime.TimeEntries">
             <th>
-                <abbr title="@context.Date">@context.Date</abbr>
+                @context.Date.ToString("dd/MM")
+            </th>
+        </Iterations>
+    </tr>
+    <tr>
+        <th>
+            <abbr title="Hours">Hours</abbr>
+        </th>
+
+        <Iterations Items="WeekTimeProcessor.WeekTime.TimeEntries">
+            <th>
+                @context.TotalHours
             </th>
         </Iterations>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th>
-            <abbr title="Position"></abbr>
-        </th>
-        <Iterations Items="WeekTimeProcessor.WeekTimeEntries.TimeEntries" Context="dayTimeEntry">
+
+    <Iterations Items="WeekTimeProcessor.WeekTime.TimeEntries.SelectMany(x => x.TimeEntries.Select(t => t.Project)).Distinct()" Context="project">
+        <tr>
             <th>
-                <abbr title="@dayTimeEntry.Date">@dayTimeEntry.TotalHours</abbr>
+                @project.Name
             </th>
+            <Iterations Items="WeekTimeProcessor.WeekTime.TimeEntries" Context="dayTimeEntry">
 
-            <Iterations Items="@dayTimeEntry.TimeEntries"  Context="timeEntry">
-                <th>
-                    <abbr title="@timeEntry.Hours">@timeEntry.Hours</abbr>
-                </th>
+                @{ var entry = dayTimeEntry.TimeEntries.SingleOrDefault(x => x.Project.Id == project.Id); }
+
+                <Condition Evaluation="@(entry is not null)">
+                    <Match>
+                        <td>@entry.Hours @entry.Comment</td>
+                    </Match>
+                    <NotMatch>
+                        <td>-</td>
+                    </NotMatch>
+                </Condition>
             </Iterations>
+        </tr>
+    </Iterations>
 
-        </Iterations>
-    </tr>
     </tbody>
+
+    <tfoot>
+
+    </tfoot>
 </table>
 
 @code {
 
-    protected override async Task OnInitializedAsync()
-    {
-        await WeekTimeProcessor.Load();
-    }
+    protected override async Task OnInitializedAsync() => await WeekTimeProcessor.Load();
 
 }

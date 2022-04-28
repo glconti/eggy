@@ -10,6 +10,9 @@ public class WeekTimeEntry
 
     public List<DayTimeEntry> TimeEntries { get; set; } = new();
 
+    public IEnumerable<Project> AllProjects =>
+        TimeEntries.SelectMany(x => x.TimeEntries.Select(t => t.Project)).Distinct();
+
     public static WeekTimeEntry Generate(DateOnly? date = default)
     {
         date ??= DateOnly.FromDateTime(DateTime.UtcNow);
@@ -25,7 +28,7 @@ public class WeekTimeEntry
 
     private static int GetWeekOfYear(DateOnly dateOnly) =>
         CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(
-            dateOnly.ToDateTime(new TimeOnly(0, 0), DateTimeKind.Utc),
+            dateOnly.ToDateTime(new(0, 0), DateTimeKind.Utc),
             CalendarWeekRule.FirstDay, DayOfWeek.Monday);
 
     private static List<DayTimeEntry> GenerateWeek(DateOnly dateTime)
@@ -37,7 +40,7 @@ public class WeekTimeEntry
 
         for (var i = 0; i < 7; i++)
         {
-            result.Add(new DayTimeEntry
+            result.Add(new()
             {
                 Date = startDate
             });

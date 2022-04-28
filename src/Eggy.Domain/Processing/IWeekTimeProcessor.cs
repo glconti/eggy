@@ -4,7 +4,7 @@ namespace Eggy.Domain.Processing;
 
 public interface IWeekTimeProcessor
 {
-    WeekTimeEntry WeekTimeEntries { get; }
+    WeekTimeEntry WeekTime { get; }
 
     event Action? EntriesChanged;
 
