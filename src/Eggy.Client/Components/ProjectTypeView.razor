@@ -15,5 +15,5 @@
     [EditorRequired]
     public ProjectType ProjectType { get; set; } = null!;
 
-    public async Task DeleteProject() => await _projectProcessor.RemoveProjectType(ProjectType);
+    public void DeleteProject() => _projectProcessor.RemoveProjectType(ProjectType);
 }

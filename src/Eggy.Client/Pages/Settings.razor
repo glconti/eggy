@@ -6,6 +6,6 @@
 
 @code {
 
-    protected override async Task OnInitializedAsync() => await _projectProcessor.Init();
+    protected override void OnInitialized() => _projectProcessor.Init();
 
 }

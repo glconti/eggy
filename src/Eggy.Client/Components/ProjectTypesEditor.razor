@@ -64,7 +64,7 @@
 
     public void Dispose() => _projectProcessor.ProjectsChanged -= StateHasChanged;
 
-    private async Task InsertNewProjectType()
+    private void InsertNewProjectType()
     {
         if (string.IsNullOrWhiteSpace(_newType) || string.IsNullOrWhiteSpace(_newType)) return;
 
@@ -72,7 +72,7 @@
 
         if (_projectProcessor.AllProjectTypes.Contains(newProjectType)) return;
 
-        await _projectProcessor.AddProjectType(newProjectType);
+        _projectProcessor.AddProjectType(newProjectType);
     }
 
     private void ToggleExpand() => _isExpanded = !_isExpanded;

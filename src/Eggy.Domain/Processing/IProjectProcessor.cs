@@ -8,15 +8,15 @@ public interface IProjectProcessor
 
     IReadOnlyList<ProjectType> AllProjectTypes { get; }
 
-    ValueTask Init();
+    void Init();
 
-    ValueTask AddProject(Project project);
+    void AddProject(Project project);
 
-    ValueTask RemoveProject(Project project);
+    void RemoveProject(Project project);
 
-    ValueTask AddProjectType(ProjectType newType);
+    void AddProjectType(ProjectType newType);
 
-    ValueTask RemoveProjectType(ProjectType newType);
+    void RemoveProjectType(ProjectType newType);
 
     event Action ProjectsChanged;
 }

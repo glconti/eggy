@@ -85,7 +85,7 @@
 
     public void Dispose() => _projectProcessor.ProjectsChanged -= UpdateView;
 
-    private async Task InsertNewProject()
+    private void InsertNewProject()
     {
         if (string.IsNullOrWhiteSpace(_newId)
             || string.IsNullOrWhiteSpace(_newName)
@@ -94,7 +94,7 @@
 
         var (type, category) = _projectProcessor.AllProjectTypes[_newTypeIndex];
 
-        await _projectProcessor.AddProject(new Project(_newId, _newName, type, category));
+        _projectProcessor.AddProject(new Project(_newId, _newName, type, category));
     }
 
     private void ToggleExpand() => _isExpanded = !_isExpanded;

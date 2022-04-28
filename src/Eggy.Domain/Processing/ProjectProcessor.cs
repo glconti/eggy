@@ -1,6 +1,5 @@
 ﻿using Eggy.Domain.Brokers;
 using Eggy.Domain.Models;
-using Eggy.Domain.System;
 
 namespace Eggy.Domain.Processing;
 
@@ -18,46 +17,46 @@ public class ProjectProcessor : IProjectProcessor
 
     public event Action? ProjectsChanged;
 
-    public async ValueTask Init()
+    public void Init()
     {
-        _allProjects = await _storageBroker.GetAllProjects().NoContext();
-        _allProjectTypes = await _storageBroker.GetAllProjectTypes().NoContext();
+        _allProjects = _storageBroker.GetAllProjects();
+        _allProjectTypes = _storageBroker.GetAllProjectTypes();
 
         ProjectsChanged?.Invoke();
     }
 
-    public async ValueTask AddProject(Project project)
+    public void AddProject(Project project)
     {
         _allProjects.Add(project);
 
-        await _storageBroker.SaveProjects(_allProjects).NoContext();
+        _storageBroker.SaveProjects(_allProjects);
 
         ProjectsChanged?.Invoke();
     }
 
-    public async ValueTask RemoveProject(Project project)
+    public void RemoveProject(Project project)
     {
         _allProjects.Remove(project);
 
-        await _storageBroker.SaveProjects(_allProjects).NoContext();
+        _storageBroker.SaveProjects(_allProjects);
 
         ProjectsChanged?.Invoke();
     }
 
-    public async ValueTask AddProjectType(ProjectType projectType)
+    public void AddProjectType(ProjectType projectType)
     {
         _allProjectTypes.Add(projectType);
 
-        await _storageBroker.SaveProjectTypes(_allProjectTypes).NoContext();
+        _storageBroker.SaveProjectTypes(_allProjectTypes);
 
         ProjectsChanged?.Invoke();
     }
 
-    public async ValueTask RemoveProjectType(ProjectType projectType)
+    public void RemoveProjectType(ProjectType projectType)
     {
         _allProjectTypes.Remove(projectType);
 
-        await _storageBroker.SaveProjectTypes(_allProjectTypes).NoContext();
+        _storageBroker.SaveProjectTypes(_allProjectTypes);
 
         ProjectsChanged?.Invoke();
     }

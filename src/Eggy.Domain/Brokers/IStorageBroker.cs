@@ -4,13 +4,13 @@ namespace Eggy.Domain.Brokers;
 
 public interface IStorageBroker
 {
-    ValueTask<WeekTimeEntry> GetDayEntry(DateOnly? dateOnly = default);
+    WeekTimeEntry GetDayEntry(DateOnly? dateOnly = default);
 
-    ValueTask<List<Project>> GetAllProjects();
+    List<Project> GetAllProjects();
 
-    ValueTask<List<ProjectType>> GetAllProjectTypes();
+    List<ProjectType> GetAllProjectTypes();
 
-    ValueTask SaveProjects(List<Project> projects);
+    void SaveProjects(List<Project> projects);
 
-    ValueTask SaveProjectTypes(List<ProjectType> allProjectTypes);
+    void SaveProjectTypes(List<ProjectType> allProjectTypes);
 }

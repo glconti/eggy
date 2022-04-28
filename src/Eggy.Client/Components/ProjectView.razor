@@ -17,5 +17,5 @@
     [EditorRequired]
     public Project Project { get; set; } = null!;
 
-    public async Task DeleteProject() => await _projectProcessor.RemoveProject(Project);
+    public void DeleteProject() => _projectProcessor.RemoveProject(Project);
 }

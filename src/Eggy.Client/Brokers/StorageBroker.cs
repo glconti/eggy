@@ -1,7 +1,6 @@
-﻿using Blazored.LocalStorage;
-using Eggy.Domain.Brokers;
+﻿using Eggy.Domain.Brokers;
 using Eggy.Domain.Models;
-using Eggy.Domain.System;
+using Microsoft.JSInterop;
 
 namespace Eggy.Client.Brokers;
 
@@ -19,47 +18,48 @@ internal class StorageBroker : IStorageBroker
         _logger = logger;
     }
 
-    public async ValueTask<WeekTimeEntry> GetDayEntry(DateOnly? dateOnly = default)
+    public WeekTimeEntry GetDayEntry(DateOnly? dateOnly = default)
     {
         dateOnly ??= DateOnly.FromDateTime(DateTime.UtcNow.Date);
 
-        return await _localStorage.GetItemAsync<WeekTimeEntry>(WeekTimeEntry.GetKey(dateOnly.Value)).NoContext() ?? WeekTimeEntry.Generate(dateOnly);
+        return _localStorage.GetItem<WeekTimeEntry>(WeekTimeEntry.GetKey(dateOnly.Value)) ??
+               WeekTimeEntry.Generate(dateOnly);
     }
 
-    public async ValueTask<List<Project>> GetAllProjects()
+    public List<Project> GetAllProjects()
     {
         try
         {
-            return await _localStorage.GetItemAsync<List<Project>>(ProjectListStorage).NoContext() ?? new List<Project>();
+            return _localStorage.GetItem<List<Project>>(ProjectListStorage) ?? new List<Project>();
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Unable to load project list. It will be reset");
 
             var projects = new List<Project>();
-            await SaveProjects(projects).NoContext();
+            SaveProjects(projects);
             return projects;
         }
     }
 
-    public async ValueTask<List<ProjectType>> GetAllProjectTypes()
+    public List<ProjectType> GetAllProjectTypes()
     {
         try
         {
-            return await _localStorage.GetItemAsync<List<ProjectType>>(ProjectTypesListStorage)
-                .NoContext() ?? new List<ProjectType>();
+            return _localStorage.GetItem<List<ProjectType>>(ProjectTypesListStorage)
+                   ?? new List<ProjectType>();
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Unable to load project types list. It will be reset");
 
             var projectTypes = new List<ProjectType>();
-            await SaveProjectTypes(projectTypes).NoContext();
+            SaveProjectTypes(projectTypes);
             return projectTypes;
         }
     }
 
-    public ValueTask SaveProjects(List<Project> projects) =>  _localStorage.SetItemAsync("Const_ProjectsList", projects);
+    public void SaveProjects(List<Project> projects) => _localStorage.SetItem("Const_ProjectsList", projects);
 
-    public ValueTask SaveProjectTypes(List<ProjectType> allProjectTypes) => _localStorage.SetItemAsync(ProjectTypesListStorage, allProjectTypes);
+    public void SaveProjectTypes(List<ProjectType> allProjectTypes) => _localStorage.SetItem(ProjectTypesListStorage, allProjectTypes);
 }
