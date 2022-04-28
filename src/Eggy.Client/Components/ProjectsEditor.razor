@@ -1,6 +1,6 @@
 ﻿@using Eggy.Domain.Models
 @implements IDisposable
-@inject IProjectProcessor _projectProcessor
+@inject IProjectProcessor ProjectProcessor
 
 <div class="box is-grouped">
     <div class="level">
@@ -26,7 +26,7 @@
                     <div class="control">
                         <div class="select is-fullwidth">
                             <select @bind="@_newTypeIndex">
-                                <Iterations Items="_projectProcessor.AllProjectTypes.Select((projectType, index) => new {ProjectType = projectType, Index = index})">
+                                <Iterations Items="ProjectProcessor.AllProjectTypes.Select((projectType, index) => new { ProjectType = projectType, Index = index })">
                                     <option value="@context.Index">@context.ProjectType.Type - @context.ProjectType.Category</option>
                                 </Iterations>
                             </select>
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <Iterations Items="_projectProcessor.AllProjects">
+        <Iterations Items="ProjectProcessor.AllProjects">
             <ProjectView Project="@context"/>
         </Iterations>
 
@@ -66,35 +66,35 @@
 @code {
 
     private bool _isExpanded;
-    private string _newId  = string.Empty;
+    private string _newId = string.Empty;
     private string _newName = string.Empty;
-    private int _newTypeIndex  = -1;
+    private int _newTypeIndex = -1;
 
     private string IsExpandedClass => _isExpanded ? string.Empty : "is-hidden";
     private string ExpandButtonIconClass => _isExpanded ? "chevron-up-outline" : "chevron-down-outline";
 
     private void UpdateView()
     {
-        if (_newTypeIndex < 0 && _projectProcessor.AllProjectTypes.Count > 0)
+        if (_newTypeIndex < 0 && ProjectProcessor.AllProjectTypes.Count > 0)
             _newTypeIndex = 0;
 
         StateHasChanged();
     }
 
-    protected override void OnInitialized() => _projectProcessor.ProjectsChanged += UpdateView;
+    protected override void OnInitialized() => ProjectProcessor.ProjectsChanged += UpdateView;
 
-    public void Dispose() => _projectProcessor.ProjectsChanged -= UpdateView;
+    public void Dispose() => ProjectProcessor.ProjectsChanged -= UpdateView;
 
     private void InsertNewProject()
     {
         if (string.IsNullOrWhiteSpace(_newId)
             || string.IsNullOrWhiteSpace(_newName)
             || _newTypeIndex < 0
-            || _projectProcessor.AllProjects.Any(project => project.Id == _newId || project.Name == _newName)) return;
+            || ProjectProcessor.AllProjects.Any(project => project.Id == _newId || project.Name == _newName)) return;
 
-        var (type, category) = _projectProcessor.AllProjectTypes[_newTypeIndex];
+        var (type, category) = ProjectProcessor.AllProjectTypes[_newTypeIndex];
 
-        _projectProcessor.AddProject(new Project(_newId, _newName, type, category));
+        ProjectProcessor.AddProject(new Project(_newId, _newName, type, category));
     }
 
     private void ToggleExpand() => _isExpanded = !_isExpanded;

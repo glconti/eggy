@@ -1,6 +1,6 @@
 ﻿@using Eggy.Domain.Models
 @implements IDisposable
-@inject IProjectProcessor _projectProcessor
+@inject IProjectProcessor ProjectProcessor
 
 <div class="box is-grouped">
     <div class="level">
@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <Iterations Items="_projectProcessor.AllProjectTypes">
+        <Iterations Items="ProjectProcessor.AllProjectTypes">
             <ProjectTypeView ProjectType="@context"/>
         </Iterations>
 
@@ -60,9 +60,9 @@
     private string IsExpandedClass => _isExpanded ? string.Empty : "is-hidden";
     private string ExpandButtonIconClass => _isExpanded ? "chevron-up-outline" : "chevron-down-outline";
 
-    protected override void OnInitialized() => _projectProcessor.ProjectsChanged += StateHasChanged;
+    protected override void OnInitialized() => ProjectProcessor.ProjectsChanged += StateHasChanged;
 
-    public void Dispose() => _projectProcessor.ProjectsChanged -= StateHasChanged;
+    public void Dispose() => ProjectProcessor.ProjectsChanged -= StateHasChanged;
 
     private void InsertNewProjectType()
     {
@@ -70,9 +70,9 @@
 
         var newProjectType = new ProjectType(_newType, _newCategory);
 
-        if (_projectProcessor.AllProjectTypes.Contains(newProjectType)) return;
+        if (ProjectProcessor.AllProjectTypes.Contains(newProjectType)) return;
 
-        _projectProcessor.AddProjectType(newProjectType);
+        ProjectProcessor.AddProjectType(newProjectType);
     }
 
     private void ToggleExpand() => _isExpanded = !_isExpanded;

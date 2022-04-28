@@ -1,46 +1,36 @@
-﻿@inject IWeekTimeProcessor _weekTimeProcessor
+﻿@inject IWeekTimeProcessor WeekTimeProcessor
 
 <table class="table">
     <thead>
     <tr>
         <th>
-            <abbr title="Project">Project</abbr>
+            <abbr title="Project">Total hours</abbr>
         </th>
 
-        <Iterations Items="_weekTimeProcessor.WeekTimeEntries.TimeEntries">
+        <Iterations Items="WeekTimeProcessor.WeekTimeEntries.TimeEntries">
             <th>
                 <abbr title="@context.Date">@context.Date</abbr>
             </th>
         </Iterations>
     </tr>
     </thead>
-@*    <tfoot>
+    <tbody>
     <tr>
         <th>
             <abbr title="Position"></abbr>
         </th>
-        <Iterations Items="_weekTimeProcessor.WeekTimeEntries.TimeEntries">
+        <Iterations Items="WeekTimeProcessor.WeekTimeEntries.TimeEntries" Context="dayTimeEntry">
             <th>
-                <abbr title="@context.Date">@context.TotalHours.ToString()</abbr>
+                <abbr title="@dayTimeEntry.Date">@dayTimeEntry.TotalHours</abbr>
             </th>
+
+            <Iterations Items="@dayTimeEntry.TimeEntries"  Context="timeEntry">
+                <th>
+                    <abbr title="@timeEntry.Hours">@timeEntry.Hours</abbr>
+                </th>
+            </Iterations>
+
         </Iterations>
-    </tr>
-    </tfoot>*@
-    <tbody>
-    <tr>
-        <th>1</th>
-        <td>
-            <a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
-        </td>
-        <td>38</td>
-        <td>23</td>
-        <td>12</td>
-        <td>3</td>
-        <td>68</td>
-        <td>36</td>
-        <td>+32</td>
-        <td>81</td>
-        <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
     </tr>
     </tbody>
 </table>
@@ -49,7 +39,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await _weekTimeProcessor.Load();
+        await WeekTimeProcessor.Load();
     }
 
 }

@@ -1,5 +1,5 @@
 ﻿@using Eggy.Domain.Models
-@inject IProjectProcessor _projectProcessor
+@inject IProjectProcessor ProjectProcessor
 
 <p class="box level">
     <div class="level-left">
@@ -15,5 +15,5 @@
     [EditorRequired]
     public ProjectType ProjectType { get; set; } = null!;
 
-    public void DeleteProject() => _projectProcessor.RemoveProjectType(ProjectType);
+    public void DeleteProject() => ProjectProcessor.RemoveProjectType(ProjectType);
 }

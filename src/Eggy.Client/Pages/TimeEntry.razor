@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject IWeekTimeProcessor _weekTimeProcessor
+@inject IWeekTimeProcessor WeekTimeProcessor
 
 <WeekTimeEntryView/>
 
@@ -91,6 +91,6 @@
 
 @code {
 
-    protected override async Task OnInitializedAsync() => await _weekTimeProcessor.Load();
+    protected override async Task OnInitializedAsync() => await WeekTimeProcessor.Load();
 
 }

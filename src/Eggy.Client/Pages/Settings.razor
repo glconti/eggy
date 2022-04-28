@@ -1,11 +1,11 @@
 ﻿@page "/settings"
-@inject IProjectProcessor _projectProcessor
+@inject IProjectProcessor ProjectProcessor
 
 <ProjectTypesEditor/>
 <ProjectsEditor/>
 
 @code {
 
-    protected override void OnInitialized() => _projectProcessor.Init();
+    protected override void OnInitialized() => ProjectProcessor.Init();
 
 }
