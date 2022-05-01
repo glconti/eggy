@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Domain", "src\Eggy.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eggy.Domain.Tests", "tst\Eggy.Domain.Tests\Eggy.Domain.Tests.csproj", "{8C6B4EA4-B0C5-47D8-A920-08834F90B975}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eggy.Client.Mud", "src\EggyClientMudBlazor\Eggy.Client.Mud\Eggy.Client.Mud.csproj", "{141518AE-0034-4115-8804-32A61579782E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{8C6B4EA4-B0C5-47D8-A920-08834F90B975}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C6B4EA4-B0C5-47D8-A920-08834F90B975}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C6B4EA4-B0C5-47D8-A920-08834F90B975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{141518AE-0034-4115-8804-32A61579782E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{141518AE-0034-4115-8804-32A61579782E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{141518AE-0034-4115-8804-32A61579782E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{141518AE-0034-4115-8804-32A61579782E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{8B7711D3-CB6B-4019-93EC-77B01CA7A4EB} = {5FF38187-3146-403E-B386-C48BA317DC59}
 		{8E1ECDE2-7BED-48FA-8BD0-DA28006AC1F4} = {5FF38187-3146-403E-B386-C48BA317DC59}
 		{8C6B4EA4-B0C5-47D8-A920-08834F90B975} = {1A732C74-7BF8-4908-A69C-0834B42116FB}
+		{141518AE-0034-4115-8804-32A61579782E} = {5FF38187-3146-403E-B386-C48BA317DC59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE2ECC3C-1535-4B49-AA1D-D4F909DBFB0F}
