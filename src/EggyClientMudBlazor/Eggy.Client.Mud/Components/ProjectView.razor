@@ -1,21 +1,43 @@
 ﻿@using Eggy.Domain.Models
 @inject IProjectProcessor ProjectProcessor
 
-<p class="box level">
-    <div class="level-left">
-        <span class="level-item">@Project.Type</span>
-        <span class="level-item">@Project.Category</span>
-        <span class="level-item">@Project.Id</span>
-        <span class="level-item">@Project.Name</span>
-        <button class="button delete is-danger level-item" @onclick="DeleteProject"></button>
-    </div>
-</p>
+<MudStack Row="true">
+    <MudTextField T="string" Label="Type" ReadOnly="true" @bind-Value="TypeReadonly"></MudTextField>
+    <MudTextField T="string" Label="Category" ReadOnly="true" @bind-Value="CategoryReadonly"/>
+    <MudTextField T="string" Label="Id" ReadOnly="true" @bind-Value="IdReadonly"/>
+    <MudTextField T="string" Label="Name" ReadOnly="true" @bind-Value="NameReadonly"/>
+    <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.Delete" DisableElevation="true" OnClick="@DeleteProject"/>
+</MudStack>
 
 @code {
 
     [Parameter]
     [EditorRequired]
     public Project Project { get; set; } = null!;
+
+    public string TypeReadonly
+    {
+        get => Project.Type;
+        set => throw new NotImplementedException();
+    }
+
+    public string CategoryReadonly
+    {
+        get => Project.Category;
+        set => throw new NotImplementedException();
+    }
+
+    public string IdReadonly
+    {
+        get => Project.Id;
+        set => throw new NotImplementedException();
+    }
+
+    public string NameReadonly
+    {
+        get => Project.Name;
+        set => throw new NotImplementedException();
+    }
 
     public void DeleteProject() => ProjectProcessor.RemoveProject(Project);
 }

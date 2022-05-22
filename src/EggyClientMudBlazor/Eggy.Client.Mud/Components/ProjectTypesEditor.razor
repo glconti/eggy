@@ -2,9 +2,9 @@
 @inject IProjectProcessor ProjectProcessor
 
 <MudStack Row="true">
-    <MudTextField T="string" Label="Type" @bind-Value="@_newType" Placeholder="DRD"/>
-    <MudTextField T="string" Label="Category" @bind-Value="@_newCategory" Placeholder="Tekomar XPERT"/>
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" DisableElevation="true" OnClick="@InsertNewProjectType"/>
+    <MudTextField Label="Type" @bind-Value="_newType" Placeholder="DRD"/>
+    <MudTextField Label="Category" @bind-Value="_newCategory" Placeholder="Tekomar XPERT"/>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" DisableElevation="true" OnClick="@InsertNewProjectType" Disabled="@CantAddProjectType"/>
 </MudStack>
 
 @code {
@@ -12,15 +12,20 @@
     private string _newType = string.Empty;
     private string _newCategory = string.Empty;
 
+    private bool CantAddProjectType => string.IsNullOrWhiteSpace(_newType) || string.IsNullOrWhiteSpace(_newType);
+
     private void InsertNewProjectType()
     {
-        if (string.IsNullOrWhiteSpace(_newType) || string.IsNullOrWhiteSpace(_newType)) return;
+        if (CantAddProjectType) return;
 
         var newProjectType = new ProjectType(_newType, _newCategory);
 
         if (ProjectProcessor.AllProjectTypes.Contains(newProjectType)) return;
 
         ProjectProcessor.AddProjectType(newProjectType);
+
+        _newType = string.Empty;
+        _newCategory = string.Empty;
     }
 
 }

@@ -1,8 +1,8 @@
 ﻿@implements IDisposable
 @inject IProjectProcessor ProjectProcessor
 
-<Iterations Items="ProjectProcessor.AllProjectTypes.OrderBy(x => x.Type).ThenBy(x => x.Category)">
-    <ProjectTypeView ProjectType="@context"/>
+<Iterations Items="ProjectProcessor.AllProjects.OrderBy(x => x.Type).ThenBy(x => x.Category).ThenBy(x => x.Name)">
+    <ProjectView Project="@context"/>
 </Iterations>
 
 @code {

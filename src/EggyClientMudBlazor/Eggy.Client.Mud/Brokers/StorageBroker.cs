@@ -7,7 +7,7 @@ namespace Eggy.Client.Mud.Brokers;
 internal class StorageBroker : IStorageBroker
 {
     private const string ProjectListStorage = "Const_ProjectsList";
-    private const string ProjectTypesListStorage = "Const_ProjectsList";
+    private const string ProjectTypesListStorage = "Const_ProjectTypesList";
 
     private readonly ILocalStorageService _localStorage;
     private readonly ILogger<StorageBroker> _logger;

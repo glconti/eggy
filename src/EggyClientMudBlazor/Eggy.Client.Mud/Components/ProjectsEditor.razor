@@ -1,101 +1,36 @@
 ﻿@using Eggy.Domain.Models
-@implements IDisposable
 @inject IProjectProcessor ProjectProcessor
 
-<div class="box is-grouped">
-    <div class="level">
-        <div class="level-left">
-            <div class="level-item">
-                <button class="button" @onclick="ToggleExpand">
-                    <span class="icon has-text-info is-large">
-                        <ion-icon name="@ExpandButtonIconClass" aria-hidden="true"></ion-icon>
-                    </span>
-                </button>
-            </div>
-            <div class="level-item">
-                <h1 class="title has-text-primary-dark is-inline">Edit Projects</h1>
-            </div>
-        </div>
-    </div>
-
-    <div class="@IsExpandedClass">
-        <div class="field is-horizontal">
-            <div class="field-body">
-
-                <div class="field is-narrow">
-                    <div class="control">
-                        <div class="select is-fullwidth">
-                            <select @bind="@_newTypeIndex">
-                                <Iterations Items="ProjectProcessor.AllProjectTypes.Select((projectType, index) => new { ProjectType = projectType, Index = index })">
-                                    <option value="@context.Index">@context.ProjectType.Type - @context.ProjectType.Category</option>
-                                </Iterations>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <p class="control">
-                        <input class="input" placeholder="Id" @bind="@_newId">
-                    </p>
-                </div>
-
-                <div class="field is-expanded">
-                    <div class="control">
-                        <input class="input" placeholder="name" @bind="@_newName">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-primary" @onclick="InsertNewProject">Add project</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <Iterations Items="ProjectProcessor.AllProjects">
-            <ProjectView Project="@context"/>
+<MudStack Row="true">
+    <MudSelect Label="Type" AnchorOrigin="Origin.BottomCenter" @bind-Value="_newType">
+        <Iterations Items="ProjectProcessor.AllProjectTypes">
+            <MudSelectItem Value="@context">@context.Type - @context.Category</MudSelectItem>
         </Iterations>
-
-    </div>
-</div>
-
+    </MudSelect>
+    <MudTextField Label="Id" @bind-Value="@_newId" Placeholder="52.914.1.1.000.000.31"/>
+    <MudTextField Label="Name" @bind-Value="@_newName" Placeholder="General development"/>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" DisableElevation="true" OnClick="@InsertNewProject" Disabled="@CantAddProject"/>
+</MudStack>
 
 @code {
 
-    private bool _isExpanded;
     private string _newId = string.Empty;
     private string _newName = string.Empty;
-    private int _newTypeIndex = -1;
+    private ProjectType? _newType = null;
 
-    private string IsExpandedClass => _isExpanded ? string.Empty : "is-hidden";
-    private string ExpandButtonIconClass => _isExpanded ? "chevron-up-outline" : "chevron-down-outline";
-
-    private void UpdateView()
-    {
-        if (_newTypeIndex < 0 && ProjectProcessor.AllProjectTypes.Count > 0)
-            _newTypeIndex = 0;
-
-        StateHasChanged();
-    }
-
-    protected override void OnInitialized() => ProjectProcessor.ProjectsChanged += UpdateView;
-
-    public void Dispose() => ProjectProcessor.ProjectsChanged -= UpdateView;
+    private bool CantAddProject => string.IsNullOrWhiteSpace(_newId)
+                                   || string.IsNullOrWhiteSpace(_newName)
+                                   || _newType is null
+                                   || ProjectProcessor.AllProjects.Any(project => project.Id == _newId || project.Name == _newName);
 
     private void InsertNewProject()
     {
-        if (string.IsNullOrWhiteSpace(_newId)
-            || string.IsNullOrWhiteSpace(_newName)
-            || _newTypeIndex < 0
-            || ProjectProcessor.AllProjects.Any(project => project.Id == _newId || project.Name == _newName)) return;
+        if (CantAddProject) return;
 
-        var (type, category) = ProjectProcessor.AllProjectTypes[_newTypeIndex];
+        ProjectProcessor.AddProject(new(_newId, _newName, _newType!.Type, _newType!.Category));
 
-        ProjectProcessor.AddProject(new Project(_newId, _newName, type, category));
+        _newId = string.Empty;
+        _newName = string.Empty;
     }
 
-    private void ToggleExpand() => _isExpanded = !_isExpanded;
 }

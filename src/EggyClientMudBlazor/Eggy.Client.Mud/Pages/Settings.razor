@@ -2,12 +2,13 @@
 @inject IProjectProcessor ProjectProcessor
 
 <MudExpansionPanels MultiExpansion="true">
-    <MudExpansionPanel Text="Edit Project Types">
+    <MudExpansionPanel Text="Project Types">
         <ProjectTypesEditor/>
         <ProjectTypesView/>
     </MudExpansionPanel>
-    <MudExpansionPanel Text="Edit Project Types">
+    <MudExpansionPanel Text="Projects" IsExpanded="true">
         <ProjectsEditor/>
+        <ProjectsView/>
     </MudExpansionPanel>
 </MudExpansionPanels>
 
