@@ -31,7 +31,7 @@ public class WeekTimeEntry
 
     private static int GetWeekOfYear(DateOnly dateOnly) =>
         CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(
-            dateOnly.ToDateTime(new TimeOnly(0, 0), DateTimeKind.Utc),
+            dateOnly.ToDateTime(new(0, 0), DateTimeKind.Utc),
             CalendarWeekRule.FirstDay, DayOfWeek.Monday);
 
     private static ProjectTimeEntry GenerateProjectEntry(DateOnly dateTime)
