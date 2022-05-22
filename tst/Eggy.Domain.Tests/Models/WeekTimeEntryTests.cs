@@ -31,7 +31,7 @@ public class WeekTimeEntryTests : TestsBase
             var weekTimeEntry = WeekTimeEntry.Generate(date);
 
             //Assert
-            weekTimeEntry.TimeEntries.Should().BeEquivalentTo(new[]
+            weekTimeEntry.ProjectEntries.Should().BeEquivalentTo(new[]
             {
                 new DayTimeEntry { Date = new DateOnly(2022, 02, 21) },
                 new DayTimeEntry { Date = new DateOnly(2022, 02, 22) },

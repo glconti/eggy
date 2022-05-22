@@ -1,0 +1,19 @@
+﻿@using Eggy.Domain.Models
+@inject IProjectProcessor ProjectProcessor
+
+<p class="box level">
+    <div class="level-left">
+        <span class="level-item">@ProjectType.Type</span>
+        <span class="level-item">@ProjectType.Category</span>
+        <button class="button delete is-danger level-item" @onclick="DeleteProject"></button>
+    </div>
+</p>
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public ProjectType ProjectType { get; set; } = null!;
+
+    public void DeleteProject() => ProjectProcessor.RemoveProjectType(ProjectType);
+}

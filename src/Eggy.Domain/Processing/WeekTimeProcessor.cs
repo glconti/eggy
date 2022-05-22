@@ -13,7 +13,7 @@ public class WeekTimeProcessor : IWeekTimeProcessor
 
     public event Action? EntriesChanged;
 
-    public async ValueTask Load(DateTime? date = default)
+    public ValueTask Load(DateTime? date = default)
     {
         //date ??= DateTime.Today;
 
@@ -24,59 +24,40 @@ public class WeekTimeProcessor : IWeekTimeProcessor
         var project1 = new Project("Project1", "First Project", "DRD", "Development");
         var project2 = new Project("Project2", "Second Project", "SZT", "Admin");
 
-        WeekTime = new()
+        var weekTimeEntry = WeekTime = WeekTimeEntry.Generate(new DateOnly(2022, 02, 21));
+
+        weekTimeEntry.ProjectEntries = new List<ProjectTimeEntry>
         {
-            Id = "2022-9",
-            TimeEntries = new()
+            new()
             {
-                new()
+                Project = project1,
+                TimeEntries = new List<TimeEntry>
                 {
-                    Date = new(2022, 02, 21),
-                    TimeEntries = new()
-                    {
-                        new() { Comment = "A", Hours = 3, Project = project1 },
-                        new() { Comment = "B", Hours = 2, Project = project2 }
-                    }
-                },
-                new()
+                    new() {Date = new DateOnly(2022, 02, 21), Comment = "Monday 1", Hours = 1.5},
+                    new() {Date = new DateOnly(2022, 02, 22), Comment = "Tuesday 1", Hours = 2},
+                    new() {Date = new DateOnly(2022, 02, 23), Comment = "Wednesday 1", Hours = 3.5},
+                    new() {Date = new DateOnly(2022, 02, 24), Comment = "Thursday 1", Hours = 4},
+                    new() {Date = new DateOnly(2022, 02, 25), Comment = "Friday 1", Hours = 5.5},
+                    new() {Date = new DateOnly(2022, 02, 26), Comment = "Saturday 1", Hours = 6},
+                    new() {Date = new DateOnly(2022, 02, 27), Comment = "Sunday 1", Hours = 7.5}
+                }
+            },
+            new()
+            {
+                Project = project2,
+                TimeEntries = new List<TimeEntry>
                 {
-                    Date = new(2022, 02, 22),
-                    TimeEntries = new()
-                    {
-                        new() { Comment = "C", Hours = 1, Project = project1 },
-                        new() { Comment = "D", Hours = 2, Project = project2 }
-                    }
-                },
-                new()
-                {
-                    Date = new(2022, 02, 23),
-                    TimeEntries = new()
-                    {
-                        new() { Comment = "E", Hours = 1, Project = project2 },
-                        new() { Comment = "F", Hours = 0.5, Project = project1 }
-                    }
-                },
-                new()
-                {
-                    Date = new(2022, 02, 24),
-                    TimeEntries = new()
-                    {
-                        new() { Comment = "G", Hours = 2, Project = project1 },
-                        new() { Comment = "H", Hours = 1, Project = project2 }
-                    }
-                },
-                new()
-                {
-                    Date = new(2022, 02, 25),
-                    TimeEntries = new()
-                    {
-                        new() { Comment = "J", Hours = 4, Project = project1 },
-                        new() { Comment = "K", Hours = 3, Project = project2 }
-                    }
-                },
-                new() { Date = new(2022, 02, 26) },
-                new() { Date = new(2022, 02, 27) }
+                    new() {Date = new DateOnly(2022, 02, 21), Comment = "Monday 2", Hours = 7},
+                    new() {Date = new DateOnly(2022, 02, 22), Comment = "Tuesday 2", Hours = 6.6},
+                    new() {Date = new DateOnly(2022, 02, 23), Comment = "Wednesday 3", Hours = 5},
+                    new() {Date = new DateOnly(2022, 02, 24), Comment = "Thursday 4", Hours = 4.5},
+                    new() {Date = new DateOnly(2022, 02, 25), Comment = "Friday 5", Hours = 3},
+                    new() {Date = new DateOnly(2022, 02, 26), Comment = "Saturday 6", Hours = 2.5},
+                    new() {Date = new DateOnly(2022, 02, 27), Comment = "Sunday 7", Hours = 1}
+                }
             }
         };
+        
+        return ValueTask.CompletedTask;
     }
 }

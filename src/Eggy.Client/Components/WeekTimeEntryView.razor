@@ -7,7 +7,7 @@
             Week @WeekTimeProcessor.WeekTime.Id
         </th>
 
-        <Iterations Items="WeekTimeProcessor.WeekTime.TimeEntries">
+        <Iterations Items="WeekTimeProcessor.WeekTime.ProjectEntries">
             <th>
                 @context.Date.ToString("dd/MM")
             </th>
@@ -18,7 +18,7 @@
             <abbr title="Hours">Hours</abbr>
         </th>
 
-        <Iterations Items="WeekTimeProcessor.WeekTime.TimeEntries">
+        <Iterations Items="WeekTimeProcessor.WeekTime.ProjectEntries">
             <th>
                 @context.TotalHours
             </th>
@@ -27,12 +27,12 @@
     </thead>
     <tbody>
 
-    <Iterations Items="WeekTimeProcessor.WeekTime.TimeEntries.SelectMany(x => x.TimeEntries.Select(t => t.Project)).Distinct()" Context="project">
+    <Iterations Items="WeekTimeProcessor.WeekTime.ProjectEntries.SelectMany(x => x.TimeEntries.Select(t => t.Project)).Distinct()" Context="project">
         <tr>
             <th>
                 @project.Name
             </th>
-            <Iterations Items="WeekTimeProcessor.WeekTime.TimeEntries" Context="dayTimeEntry">
+            <Iterations Items="WeekTimeProcessor.WeekTime.ProjectEntries" Context="dayTimeEntry">
 
                 @{ var entry = dayTimeEntry.TimeEntries.SingleOrDefault(x => x.Project.Id == project.Id); }
 

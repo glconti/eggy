@@ -1,0 +1,33 @@
+﻿@inject IWeekTimeProcessor WeekTimeProcessor
+
+<MudTable Items="@WeekTimeProcessor.WeekTime.ProjectEntries" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <Iterations Items="WeekTimeProcessor.WeekTime.DaysOfTheWeek">
+            <MudTh>@context.DayOfWeek - @context</MudTh>
+        </Iterations>
+        <MudTh>Total</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Monday.Hours - @context.Monday.Comment</MudTd>
+        <MudTd>@context.Tuesday.Hours - @context.Tuesday.Comment</MudTd>
+        <MudTd>@context.Wednesday.Hours- @context.Wednesday.Comment</MudTd>
+        <MudTd>@context.Thursday.Hours- @context.Thursday.Comment</MudTd>
+        <MudTd>@context.Friday.Hours- @context.Friday.Comment</MudTd>
+        <MudTd>@context.Saturday.Hours- @context.Saturday.Comment</MudTd>
+        <MudTd>@context.Sunday.Hours- @context.Sunday.Comment</MudTd>
+        <MudTd>@context.TotalHours</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(5000);
+        await WeekTimeProcessor.Load();
+        _loading = false;
+    }
+
+}

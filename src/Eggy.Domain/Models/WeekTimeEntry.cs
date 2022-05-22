@@ -6,41 +6,44 @@ namespace Eggy.Domain.Models;
 public class WeekTimeEntry
 {
     [Key]
-    public string Id { get; set; } // year-weekofyear
+    public string Id { get; set; } = string.Empty; // year-weekofyear
 
-    public List<DayTimeEntry> TimeEntries { get; set; } = new();
+    public List<ProjectTimeEntry> ProjectEntries { get; set; } = new();
 
-    public IEnumerable<Project> AllProjects =>
-        TimeEntries.SelectMany(x => x.TimeEntries.Select(t => t.Project)).Distinct();
+    public List<DateOnly> DaysOfTheWeek { get; } = new(7);
 
     public static WeekTimeEntry Generate(DateOnly? date = default)
     {
         date ??= DateOnly.FromDateTime(DateTime.UtcNow);
 
-        return new()
+        var weekTimeEntry = new WeekTimeEntry
         {
-            Id = GetKey(date.Value),
-            TimeEntries = GenerateWeek(date.Value)
+            Id = GetKey(date.Value)
         };
+        var projectEntry = GenerateProjectEntry(date.Value);
+        weekTimeEntry.ProjectEntries.Add(projectEntry);
+        weekTimeEntry.DaysOfTheWeek.AddRange(projectEntry.TimeEntries.Select(x => x.Date));
+
+        return weekTimeEntry;
     }
 
     public static string GetKey(DateOnly dateOnly) => $"{dateOnly.Year}-{GetWeekOfYear(dateOnly)}";
 
     private static int GetWeekOfYear(DateOnly dateOnly) =>
         CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(
-            dateOnly.ToDateTime(new(0, 0), DateTimeKind.Utc),
+            dateOnly.ToDateTime(new TimeOnly(0, 0), DateTimeKind.Utc),
             CalendarWeekRule.FirstDay, DayOfWeek.Monday);
 
-    private static List<DayTimeEntry> GenerateWeek(DateOnly dateTime)
+    private static ProjectTimeEntry GenerateProjectEntry(DateOnly dateTime)
     {
         var prevMondayShift = -((dateTime.DayOfWeek - DayOfWeek.Monday + 7) % 7);
         var startDate = dateTime.AddDays(prevMondayShift);
 
-        var result = new List<DayTimeEntry>(7);
+        var result = new ProjectTimeEntry();
 
         for (var i = 0; i < 7; i++)
         {
-            result.Add(new()
+            result.TimeEntries.Add(new()
             {
                 Date = startDate
             });
@@ -50,4 +53,4 @@ public class WeekTimeEntry
 
         return result;
     }
-};
+}

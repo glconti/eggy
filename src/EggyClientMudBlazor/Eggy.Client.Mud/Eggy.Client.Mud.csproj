@@ -5,9 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazor.LocalStorage.WebAssembly" Version="2.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.4" PrivateAssets="all" />
     <PackageReference Include="MudBlazor" Version="6.0.9" />
+    <PackageReference Include="PrettyBlazor" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Eggy.Domain\Eggy.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
