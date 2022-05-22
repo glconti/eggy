@@ -1,0 +1,14 @@
+﻿@implements IDisposable
+@inject IProjectProcessor ProjectProcessor
+
+<Iterations Items="ProjectProcessor.AllProjectTypes">
+    <ProjectTypeView ProjectType="@context"/>
+</Iterations>
+
+@code {
+
+    protected override void OnInitialized() => ProjectProcessor.ProjectsChanged += StateHasChanged;
+
+    public void Dispose() => ProjectProcessor.ProjectsChanged -= StateHasChanged;
+
+}

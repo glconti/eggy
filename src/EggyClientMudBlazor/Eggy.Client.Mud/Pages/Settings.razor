@@ -1,8 +1,15 @@
 ﻿@page "/settings"
 @inject IProjectProcessor ProjectProcessor
 
-<ProjectTypesEditor/>
-<ProjectsEditor/>
+<MudExpansionPanels MultiExpansion="true">
+    <MudExpansionPanel Text="Edit Project Types">
+        <ProjectTypesEditor/>
+        <ProjectTypesView/>
+    </MudExpansionPanel>
+    <MudExpansionPanel Text="Edit Project Types">
+        <ProjectsEditor/>
+    </MudExpansionPanel>
+</MudExpansionPanels>
 
 @code {
 
