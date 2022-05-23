@@ -1,0 +1,20 @@
+﻿<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" Theme="_theme"/>
+<MudSwitch @bind-Checked="@_isDarkMode" Color="Color.Primary" Class="ma-4" ThumbIcon="@SwitchIcon"/>
+
+@code{
+
+    private readonly MudTheme _theme = new();
+    private bool _isDarkMode;
+    private MudThemeProvider _mudThemeProvider = null!;
+
+    private string SwitchIcon => _isDarkMode ? Icons.Outlined.DarkMode : Icons.Outlined.LightMode;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        _isDarkMode = await _mudThemeProvider.GetSystemPreference();
+        StateHasChanged();
+    }
+
+}
