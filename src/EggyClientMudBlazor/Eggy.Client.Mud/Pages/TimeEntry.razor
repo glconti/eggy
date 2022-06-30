@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject IWeekTimeProcessor WeekTimeProcessor
+@inject IProjectProcessor ProjectProcessor
 
 <PageTitle>Week time entry</PageTitle>
 
@@ -10,6 +11,10 @@
 
 @code {
 
-    protected override async Task OnInitializedAsync() => await WeekTimeProcessor.Load();
+    protected override async Task OnInitializedAsync()
+    {
+        ProjectProcessor.Init();
+        await WeekTimeProcessor.Load();
+    }
 
 }

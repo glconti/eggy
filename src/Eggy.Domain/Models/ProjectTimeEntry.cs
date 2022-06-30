@@ -2,7 +2,7 @@
 
 public class ProjectTimeEntry
 {
-    public Project Project { get; set; } = new(string.Empty, string.Empty, string.Empty, string.Empty);
+    public Project Project { get; set; } = Project.Empty;
 
     public List<TimeEntry> TimeEntries { get; set; } = new(7);
 
@@ -21,4 +21,24 @@ public class ProjectTimeEntry
     public TimeEntry Saturday => TimeEntries[5];
 
     public TimeEntry Sunday => TimeEntries[6];
+
+    public static ProjectTimeEntry Generate(DateOnly dateTime)
+    {
+        var prevMondayShift = -((dateTime.DayOfWeek - DayOfWeek.Monday + 7) % 7);
+        var startDate = dateTime.AddDays(prevMondayShift);
+
+        var result = new ProjectTimeEntry();
+
+        for (var i = 0; i < 7; i++)
+        {
+            result.TimeEntries.Add(new()
+            {
+                Date = startDate
+            });
+
+            startDate = startDate.AddDays(1);
+        }
+
+        return result;
+    }
 }

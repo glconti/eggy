@@ -9,7 +9,7 @@
     </MudSelect>
     <MudTextField Label="Id" @bind-Value="@_newId" Placeholder="52.914.1.1.000.000.31"/>
     <MudTextField Label="Name" @bind-Value="@_newName" Placeholder="General development"/>
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" DisableElevation="true" OnClick="@InsertNewProject" Disabled="@CantAddProject"/>
+    <MudButton Variant="Variant.Text" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" DisableElevation="true" OnClick="@InsertNewProject" Disabled="@CantAddProject"/>
 </MudStack>
 
 @code {

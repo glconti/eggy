@@ -1,20 +1,61 @@
-﻿@inject IWeekTimeProcessor WeekTimeProcessor
+﻿@using Eggy.Domain.Models
+@inject IWeekTimeProcessor WeekTimeProcessor
+@inject IProjectProcessor ProjectProcessor
 
-<MudTable Items="@WeekTimeProcessor.WeekTime.ProjectEntries" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
+<MudTable Items="@AllEntries" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
     <HeaderContent>
+        <MudTh>Project</MudTh>
         <Iterations Items="WeekTimeProcessor.WeekTime.DaysOfTheWeek">
-            <MudTh>@context.DayOfWeek - @context</MudTh>
+            <MudTh>
+                @context.DayOfWeek
+                <br/>@context
+            </MudTh>
         </Iterations>
         <MudTh>Total</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd>@context.Monday.Hours - @context.Monday.Comment</MudTd>
-        <MudTd>@context.Tuesday.Hours - @context.Tuesday.Comment</MudTd>
-        <MudTd>@context.Wednesday.Hours- @context.Wednesday.Comment</MudTd>
-        <MudTd>@context.Thursday.Hours- @context.Thursday.Comment</MudTd>
-        <MudTd>@context.Friday.Hours- @context.Friday.Comment</MudTd>
-        <MudTd>@context.Saturday.Hours- @context.Saturday.Comment</MudTd>
-        <MudTd>@context.Sunday.Hours- @context.Sunday.Comment</MudTd>
+        <MudTd>
+            <Condition Evaluation="@(context.Project != Project.Empty)">
+                <Match>
+                    @context.Project.Category - @context.Project.Name
+                </Match>
+                <NotMatch>
+                    <MudAutocomplete T="Project"
+                                     @bind-Value="_newProject"
+                                     SearchFunc="@SearchProject"
+                                     ToStringFunc="@(p => p.Category + " " + p.Name)"/>
+                </NotMatch>
+            </Condition>
+        </MudTd>
+
+        <MudTd>
+            <MudTextField @bind-Value="@context.Monday.Hours"/>
+            <MudTextField @bind-Value="@context.Monday.Comment"/>
+        </MudTd>
+        <MudTd>
+            <MudTextField @bind-Value="@context.Tuesday.Hours"/>
+            <MudTextField @bind-Value="@context.Tuesday.Comment"/>
+        </MudTd>
+        <MudTd>
+            <MudTextField @bind-Value="@context.Wednesday.Hours"/>
+            <MudTextField @bind-Value="@context.Wednesday.Comment"/>
+        </MudTd>
+        <MudTd>
+            <MudTextField @bind-Value="@context.Thursday.Hours"/>
+            <MudTextField @bind-Value="@context.Thursday.Comment"/>
+        </MudTd>
+        <MudTd>
+            <MudTextField @bind-Value="@context.Friday.Hours"/>
+            <MudTextField @bind-Value="@context.Friday.Comment"/>
+        </MudTd>
+        <MudTd>
+            <MudTextField @bind-Value="@context.Saturday.Hours"/>
+            <MudTextField @bind-Value="@context.Saturday.Comment"/>
+        </MudTd>
+        <MudTd>
+            <MudTextField @bind-Value="@context.Sunday.Hours"/>
+            <MudTextField @bind-Value="@context.Sunday.Comment"/>
+        </MudTd>
         <MudTd>@context.TotalHours</MudTd>
     </RowTemplate>
 </MudTable>
@@ -22,11 +63,19 @@
 @code {
 
     private bool _loading = true;
+    private Project _newProject;
+
+    private IEnumerable<ProjectTimeEntry> AllEntries => WeekTimeProcessor.WeekTime.ProjectEntries.Concat(new[] { ProjectTimeEntry.Generate(WeekTimeProcessor.WeekTime.DaysOfTheWeek.First()) });
 
     protected override async Task OnInitializedAsync()
     {
         await WeekTimeProcessor.Load();
         _loading = false;
     }
+
+    private Task<IEnumerable<Project>> SearchProject(string arg) =>
+        Task.FromResult(string.IsNullOrEmpty(arg)
+            ? ProjectProcessor.AllProjects
+            : ProjectProcessor.AllProjects.Where(p => p.ToString().Contains(arg, StringComparison.InvariantCultureIgnoreCase)));
 
 }

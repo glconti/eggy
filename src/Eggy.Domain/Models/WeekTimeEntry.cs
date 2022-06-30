@@ -20,7 +20,7 @@ public class WeekTimeEntry
         {
             Id = GetKey(date.Value)
         };
-        var projectEntry = GenerateProjectEntry(date.Value);
+        var projectEntry = ProjectTimeEntry.Generate(date.Value);
         weekTimeEntry.ProjectEntries.Add(projectEntry);
         weekTimeEntry.DaysOfTheWeek.AddRange(projectEntry.TimeEntries.Select(x => x.Date));
 
@@ -33,24 +33,4 @@ public class WeekTimeEntry
         CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(
             dateOnly.ToDateTime(new(0, 0), DateTimeKind.Utc),
             CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-
-    private static ProjectTimeEntry GenerateProjectEntry(DateOnly dateTime)
-    {
-        var prevMondayShift = -((dateTime.DayOfWeek - DayOfWeek.Monday + 7) % 7);
-        var startDate = dateTime.AddDays(prevMondayShift);
-
-        var result = new ProjectTimeEntry();
-
-        for (var i = 0; i < 7; i++)
-        {
-            result.TimeEntries.Add(new()
-            {
-                Date = startDate
-            });
-
-            startDate = startDate.AddDays(1);
-        }
-
-        return result;
-    }
 }

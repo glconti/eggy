@@ -57,7 +57,7 @@ public class WeekTimeProcessor : IWeekTimeProcessor
                 }
             }
         };
-        
+
         return ValueTask.CompletedTask;
     }
 }

@@ -2,11 +2,11 @@
 @inject IProjectProcessor ProjectProcessor
 
 <MudStack Row="true">
-    <MudTextField T="string" Label="Type" ReadOnly="true" @bind-Value="TypeReadonly"></MudTextField>
-    <MudTextField T="string" Label="Category" ReadOnly="true" @bind-Value="CategoryReadonly"/>
-    <MudTextField T="string" Label="Id" ReadOnly="true" @bind-Value="IdReadonly"/>
-    <MudTextField T="string" Label="Name" ReadOnly="true" @bind-Value="NameReadonly"/>
-    <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.Delete" DisableElevation="true" OnClick="@DeleteProject"/>
+    <MudTextField Label="Type" ReadOnly="true" @bind-Value="TypeReadonly"></MudTextField>
+    <MudTextField Label="Category" ReadOnly="true" @bind-Value="CategoryReadonly"/>
+    <MudTextField Label="Id" ReadOnly="true" @bind-Value="IdReadonly"/>
+    <MudTextField Label="Name" ReadOnly="true" @bind-Value="NameReadonly"/>
+    <MudButton Variant="Variant.Text" Color="Color.Error" StartIcon="@Icons.Material.Filled.Delete" OnClick="@DeleteProject"/>
 </MudStack>
 
 @code {
